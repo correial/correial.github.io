@@ -3,7 +3,7 @@
     <channel>
       <title>About Me</title>
       <link>https://correial.github.io/</link>
-      <description>Opinionated, modern, pretty, and clean Zola theme.</description>
+      <description></description>
       <generator>Zola</generator>
       <language>en</language>
       <atom:link href="https://correial.github.io/rss.xml" rel="self" type="application/rss+xml"/>
