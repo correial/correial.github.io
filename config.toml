@@ -1,7 +1,7 @@
 theme = "duckquill"
 title = "About Me"
 base_url = "https://correial.github.io/"
-description = "Opinionated, modern, pretty, and clean Zola theme."
+
 
 compile_sass = true
 minify_html = true
@@ -196,7 +196,7 @@ show_repo = true
 links = [
 	{ name = "Links", menu = [
 		{ url = "@/blog/_index.md", name = "MAE 4190 Fast Robots" },
-		{ url = "@/demo/index.md", name = "Demo" },
+		{ url = "@/demo/index.md", name = "Cornell Nexus" },
 		{ url = "@/mods/index.md", name = "Mods" }
 	] },
 	{ url = "https://daudix.one/coffee/", name = "Coffee" }
@@ -206,8 +206,8 @@ links = [
 # Links used in the footer.
 # Same as the nav ones.
 links = [
-	{ url = "@/blog/_index.md", name = "Blog" },
-	{ url = "@/demo/index.md", name = "Demo" },
+	{ url = "@/blog/_index.md", name = "MAE 4190 Fast Robots" },
+	{ url = "@/demo/index.md", name = "Cornell Nexus" },
 	{ url = "@/mods/index.md", name = "Mods" },
 	{ url = "https://daudix.one/coffee/", name = "Coffee" }
 ]
