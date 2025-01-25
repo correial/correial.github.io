@@ -53,6 +53,14 @@ generate_feeds = true
 
 taxonomies = [{ name = "tags", feed = true }]
 
+[languages.fr]
+title = "Duckquill"
+description = "Un thème affirmé, moderne, beau et clair pour Zola."
+generate_feeds = true
+
+taxonomies = [{ name = "tags", feed = true }]
+
+
 [languages.ms]
 title = "Duckquill"
 description = "Tema Zola yang berpandangan, moden, cantik dan bersih."
@@ -92,13 +100,6 @@ accent_color = "#ff7800"
 # Ditto but for the dark theme.
 # If not set regular variant will be used.
 accent_color_dark = "#ffa348"
-# Whether to fix low contrast in text selection, checkboxes, etc.
-# Use only if the default doesn't provide enough contrast, e.g. the accent color is set to yellow.
-#
-# fix_contrast = true
-#
-# Ditto but for the dark theme.
-fix_contrast_dark = true
 # Whether to use fonts bundled with Duckquill instead of system ones.
 # Keep in mind that it also changes the style of headings.
 #
@@ -175,7 +176,6 @@ csp = [
 	{ directive = "style-src", domains = ["'self'", "'unsafe-inline'"] },
 	{ directive = "frame-src", domains = ["https://player.vimeo.com", "https://www.youtube-nocookie.com", "https://toot.community"] },
 	{ directive = "connect-src", domains = ["https://toot.community"] },
-	{ directive = "frame-ancestors", domains = ["'none'"] },
 	{ directive = "base-uri", domains = ["'none'"] },
 	{ directive = "form-action", domains = ["'none'"] }
 ]

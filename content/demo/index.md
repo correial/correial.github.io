@@ -667,19 +667,10 @@ With `centered` and `big` classes:
 <!-- For the demo purposes only -->
 <div id="color-picker-container">
   <small>Accent color:</small>
-  <br />
   <input id="color-picker-light" type="color" value="#ff7800" />
   <label for="color-picker-light">Light theme</label>
   <br />
   <input id="color-picker-dark" type="color" value="#ffa348" />
   <label for="color-picker-dark">Dark theme</label>
-  <br />
-  <small>Fix contrast:</small>
-  <br />
-  <input id="contrast-color-light" class="switch" type="checkbox" />
-  <label for="contrast-color-light">Light theme</label>
-  <br />
-  <input id="contrast-color-dark" class="switch" type="checkbox" checked />
-  <label for="contrast-color-dark">Dark theme</label>
 </div>
 <!-- End -->
