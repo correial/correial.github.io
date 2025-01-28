@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Home - Sensors</title>
+    <link rel="self" type="application/atom+xml" href="https://correial.github.io/tags/sensors/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://correial.github.io/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-01-26T00:00:00+00:00</updated>
+    <id>https://correial.github.io/tags/sensors/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Lab 1</title>
+        <published>2025-01-26T00:00:00+00:00</published>
+        <updated>2025-01-26T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Lucca Correia
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://correial.github.io/Fast Robots/lab-1/"/>
+        <id>https://correial.github.io/Fast Robots/lab-1/</id>
+        
+        <content type="html" xml:base="https://correial.github.io/Fast Robots/lab-1/">&lt;h2 id=&quot;lab-1a&quot;&gt;Lab 1a&lt;&#x2F;h2&gt;
+&lt;p&gt;During section 1a of the lab I installed the Arduino IDE and established a wired connection to communicate with the Artemis Nano. To connect I had to select the correct board and port in the Arduino IDE. Then, to test this connection and explore the Arduino environment I completed the following example tests:&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;blink&quot;&gt;Blink&lt;&#x2F;h4&gt;
+&lt;p&gt;You can see the Artemis board flash a bright blue led&lt;&#x2F;p&gt;
+&lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;youtube.com&#x2F;embed&#x2F;5VB6kE0aCQg&quot;&gt;&lt;&#x2F;iframe&gt;
+&lt;figcaption&gt;Blink test video&lt;&#x2F;figcaption&gt;
+&lt;h4 id=&quot;serial&quot;&gt;Serial&lt;&#x2F;h4&gt;
+&lt;p&gt;Here we can see the Artemis recieves the string and echos it back
+&lt;img src=&quot;&#x2F;Fast%20Robots%20Media&#x2F;Lab%201&#x2F;Serial.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;&lt;&#x2F;p&gt;
+&lt;figcaption&gt;Serial output test&lt;&#x2F;figcaption&gt;
+&lt;h4 id=&quot;analogread-temperature-sensor&quot;&gt;analogRead Temperature Sensor&lt;&#x2F;h4&gt;
+&lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;embed&#x2F;RllC7NYdNTk&quot;&gt;&lt;&#x2F;iframe&gt;
+&lt;figcaption&gt;Blink test video&lt;&#x2F;figcaption&gt;
+&lt;h4 id=&quot;microphone-output&quot;&gt;Microphone Output&lt;&#x2F;h4&gt;
+</content>
+        
+    </entry>
+</feed>
