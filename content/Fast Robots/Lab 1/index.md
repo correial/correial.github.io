@@ -3,12 +3,16 @@ title = "Lab 1"
 date = 2025-01-26
 weight = 1
 [taxonomies]
-tags = ["PID Controller", "Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontroller" ]
+tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontroller" ]
 +++
 
 ## Lab 1a
 
-During section 1a of the lab I installed the Arduino IDE and established a wired connection to communicate with the Artemis Nano. To connect I had to select the correct board and port in the Arduino IDE. Then, to test this connection and explore the Arduino environment I completed the following example tests:
+During section 1a of the lab I installed the Arduino IDE and established a wired connection to communicate with the Artemis Nano. To connect I had to select the correct board and port in the Arduino IDE. Then, to test the connection and explore the Arduino environment I completed the following assigned example sketches in the Arduino IDE:
+- Basics_blink
+- Apollo3_serial
+- Apollo3_analogRead
+- PDM_microphoneOutput
 
 #### Blink
 You can see the Artemis board flash a bright blue led
