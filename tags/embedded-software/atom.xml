@@ -33,11 +33,11 @@
 &lt;img src=&quot;&#x2F;Fast%20Robots%20Media&#x2F;Lab%201&#x2F;Serial.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;&lt;&#x2F;p&gt;
 &lt;figcaption&gt;Serial output test&lt;&#x2F;figcaption&gt;
 &lt;h4 id=&quot;analogread-temperature-sensor&quot;&gt;analogRead Temperature Sensor&lt;&#x2F;h4&gt;
-&lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;embed&#x2F;RllC7NYdNTk&quot;&gt;&lt;&#x2F;iframe&gt;
+&lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;RllC7NYdNTk&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
 &lt;figcaption&gt;Temperature sensor test&lt;&#x2F;figcaption&gt;
 &lt;h4 id=&quot;microphone-output&quot;&gt;Microphone Output&lt;&#x2F;h4&gt;
 &lt;p&gt;From the video you can see the Artemis microphone successfully picking up the difference in sounds in the serial monitor&lt;&#x2F;p&gt;
-&lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;embed&#x2F;gBEvY_Qi8gs&quot;&gt;&lt;&#x2F;iframe&gt;
+&lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;gBEvY_Qi8gs&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
 &lt;figcaption&gt;Micrphone output test&lt;&#x2F;figcaption&gt;
 </content>
         
