@@ -15,7 +15,13 @@
           <link>https://correial.github.io/Fast Robots/lab-1/</link>
           <guid>https://correial.github.io/Fast Robots/lab-1/</guid>
           <description xml:base="https://correial.github.io/Fast Robots/lab-1/">&lt;h2 id=&quot;lab-1a&quot;&gt;Lab 1a&lt;&#x2F;h2&gt;
-&lt;p&gt;During section 1a of the lab I installed the Arduino IDE and established a wired connection to communicate with the Artemis Nano. To connect I had to select the correct board and port in the Arduino IDE. Then, to test this connection and explore the Arduino environment I completed the following example tests:&lt;&#x2F;p&gt;
+&lt;p&gt;During section 1a of the lab I installed the Arduino IDE and established a wired connection to communicate with the Artemis Nano. To connect I had to select the correct board and port in the Arduino IDE. Then, to test the connection and explore the Arduino environment I completed the following assigned example sketches in the Arduino IDE:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Basics_blink&lt;&#x2F;li&gt;
+&lt;li&gt;Apollo3_serial&lt;&#x2F;li&gt;
+&lt;li&gt;Apollo3_analogRead&lt;&#x2F;li&gt;
+&lt;li&gt;PDM_microphoneOutput&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
 &lt;h4 id=&quot;blink&quot;&gt;Blink&lt;&#x2F;h4&gt;
 &lt;p&gt;You can see the Artemis board flash a bright blue led&lt;&#x2F;p&gt;
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;youtube.com&#x2F;embed&#x2F;5VB6kE0aCQg&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
