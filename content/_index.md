@@ -10,6 +10,6 @@ title = "About Me"
 
 <img src="/TeamPic.png#no-hover#start" alt="Team Picture" style="display:block;">
 
-Hey! My name is Lucca Correia and I am a junior at Cornell University studying Mechanical Engineering with a concentration in robotics. 
+Hey! My name is Lucca Correia and I am a junior at Cornell University studying Mechanical Engineering with a focus in robotics. 
 
-Here on campus I am on the Cornell Nexus where I lead the mechanical subteam as well as the Cornell United Soccer Club Team. 
+Here on campus I am on the Cornell Nexus Project Team as well as the Cornell United Soccer Club Team. 
