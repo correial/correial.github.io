@@ -9,7 +9,7 @@
       <atom:link href="https://correial.github.io/tags/embedded-software/rss.xml" rel="self" type="application/rss+xml"/>
       <lastBuildDate>Sun, 26 Jan 2025 00:00:00 +0000</lastBuildDate>
       <item>
-          <title>Lab 1</title>
+          <title>Lab 1: Artemis Setup and Communication</title>
           <pubDate>Sun, 26 Jan 2025 00:00:00 +0000</pubDate>
           <author>Lucca Correia</author>
           <link>https://correial.github.io/Fast Robots/lab-1/</link>
@@ -148,7 +148,7 @@
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 1&#x2F;Sendthreefloats.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
 &lt;figcaption&gt;SEND_THREE_FLOATS Output&lt;&#x2F;figcaption&gt;
 &lt;h4 id=&quot;task-3&quot;&gt;Task 3&lt;&#x2F;h4&gt;
-&lt;p&gt;I added a &lt;code&gt;GET_TIME_MILLIS&lt;&#x2F;code&gt; which makes the robot reply write a string to the string characteristic&lt;&#x2F;p&gt;
+&lt;p&gt;I added a &lt;code&gt;GET_TIME_MILLIS&lt;&#x2F;code&gt; which makes the robot reply write a string to the string characteristic. Note that &lt;code&gt;GET_TIME_MILLIS&lt;&#x2F;code&gt; had to be added to the &lt;code&gt;cmd_types.py&lt;&#x2F;code&gt; file.&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;c++&quot; class=&quot;language-c++ z-code&quot;&gt;&lt;code class=&quot;language-c++&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;z-source z-c++&quot;&gt;&lt;span class=&quot;z-keyword z-control z-c++&quot;&gt;case&lt;&#x2F;span&gt; GET_TIME_MILLIS&lt;span class=&quot;z-punctuation z-separator z-c++&quot;&gt;:&lt;&#x2F;span&gt;
 &lt;&#x2F;span&gt;&lt;span class=&quot;z-source z-c++&quot;&gt;    &lt;span class=&quot;z-storage z-type z-c&quot;&gt;unsigned&lt;&#x2F;span&gt; &lt;span class=&quot;z-storage z-type z-c&quot;&gt;long&lt;&#x2F;span&gt; elapsedT &lt;span class=&quot;z-keyword z-operator z-assignment z-c&quot;&gt;=&lt;&#x2F;span&gt; &lt;span class=&quot;z-constant z-numeric z-integer z-decimal z-c++&quot;&gt;1&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-terminator z-c++&quot;&gt;;&lt;&#x2F;span&gt;
 &lt;&#x2F;span&gt;&lt;span class=&quot;z-source z-c++&quot;&gt;    
