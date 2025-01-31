@@ -1,5 +1,5 @@
 +++
-title = "Lab 1"
+title = "Lab 1: Artemis Setup and Communication"
 date = 2025-01-26
 weight = 1
 [taxonomies]
@@ -156,7 +156,7 @@ ble.send_command(CMD.SEND_THREE_FLOATS, "3.14|2.22|8.89")
 <figcaption>SEND_THREE_FLOATS Output</figcaption>
 
 #### Task 3
-I added a `GET_TIME_MILLIS` which makes the robot reply write a string to the string characteristic
+I added a `GET_TIME_MILLIS` which makes the robot reply write a string to the string characteristic. Note that `GET_TIME_MILLIS` had to be added to the `cmd_types.py` file.
 
 ```c++
 case GET_TIME_MILLIS:

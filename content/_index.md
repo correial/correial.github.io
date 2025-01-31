@@ -2,7 +2,14 @@
 title = "About Me"
 +++
 
-# Lucca Correia
+<div style="display: flex; align-items: center;">
+  <h1 style="margin: 0;">Lucca Correia</h1>
+  <a href="https://www.linkedin.com/in/luccaec/" target="_blank" style="margin-left: 10px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 32 32" style="vertical-align: middle;">
+      <path fill="#7f7165" d="M29.637 0H2.363C1.057 0 0 1.057 0 2.363v27.274C0 30.944 1.057 32 2.363 32h27.274c1.305 0 2.363-1.056 2.363-2.363V2.363C32 1.057 30.944 0 29.637 0zM9.764 25.452H5.86V12.763h3.904v12.689zM7.812 11.265c-1.186 0-2.147-.951-2.147-2.12 0-1.171.961-2.122 2.147-2.122 1.171 0 2.12.951 2.12 2.122 0 1.169-.949 2.12-2.12 2.12zm17.679 14.187h-3.902v-6.293c0-1.497-.026-3.418-2.074-3.418-2.078 0-2.397 1.617-2.397 3.288v6.423h-3.903v-12.689h3.744v1.728h.05c.522-.981 1.798-2.015 3.698-2.015 3.957 0 4.684 2.604 4.684 5.98v6.996z"/>
+    </svg>
+  </a>
+</div>
 
 ## About Me
 
