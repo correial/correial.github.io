@@ -18,13 +18,16 @@ title = "About Me"
   </a>
 </div>
 
-
-## About Me
+<br />
 
 <img src="/ProfilePicture.jpg#no-hover#start" alt="Profile Picture" style="display:block;">
 
+<img src="/Jackson.jpeg#no-hover#start" alt="Ski" style="display:block;">
+
 <img src="/TeamPic.png#no-hover#start" alt="Team Picture" style="display:block;">
 
-Hey! My name is Lucca Correia and I am a junior at Cornell University studying Mechanical Engineering with a focus in robotics. 
+<div style="clear: both;"></div> <!-- This ensures content below the images is cleared of float or flex constraints. -->
 
-Here on campus I am on the Cornell Nexus Project Team as well as the Cornell United Soccer Club Team. 
+<p>Junior at Cornell University studying Mechanical Engineering with a focus in Robotics.</p>
+
+<p>Here on campus I am on the Cornell Nexus Project Team as well as the Cornell United Soccer Club Team.</p>
