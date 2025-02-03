@@ -35,7 +35,9 @@ From the video you can see the Artemis microphone successfully picking up the di
 
 ## Lab 1b
 
-#### Codebase and BLE
+#### Codebase and BLE Discussion
+
+STILL NEED TO DO THIS
 
 #### Configurations and Setup
 1. I started with installing venv: `python3 -m pip install --user virtualenv`
@@ -192,11 +194,62 @@ ble.send_command(CMD.GET_TIME_MILLIS, "")
 <figcaption>Notification Handler Output</figcaption>
 
 #### Task 5
+I made a twenty-five step loop that gets the current time in milliseconds using the `GET_TIME_MILLIS` function to then be processed by `notification_handler()`. From my output shown below you can see that there was an average 33.5 ms gap between the prints. This translates to 29.85 message transmissions per second. With each message being 9 bytes, this results an effective data transfer rate of **269 bytes per second** for this method.
 
+```python
+x = 0
+while x < 25:
+    k = ble.send_command(CMD.GET_TIME_MILLIS, "")
+    x+=1
+```
+
+<img src="/Fast Robots Media/Lab 1/GetTimeMillisLoop.png" alt="Alt text" style="display:block;" height="300">
+<figcaption>GET_TIME_MILLIS Loop Output</figcaption>
 
 #### Task 6
+I created a command `SEND_TIME_DATA` that loops though to add generated time steps via the `millis()` function and then stores them in an array. Then, in `SEND_TIME_DATA` I loop through the array and send each data point as a string to my laptop to be processed.
+
+Arduino Code
+```c++
+case SEND_TIME_DATA: {
+
+    int Millis_Cur = 0;
+    
+    if (!success) {
+        return;
+    }
+    
+    for (int i = 0; i < 24; i++){ 
+    Millis_Cur = millis();
+    millisArray[i] = Millis_Cur;
+    }
+
+    for (int x = 0; x < 24; x++){ 
+    tx_estring_value.clear();
+    tx_estring_value.append("T: ");
+    tx_estring_value.append(millisArray[x]);
+    tx_characteristic_string.writeValue(tx_estring_value.c_str());
+    }
+
+break;
+} 
+```
+
+Jupyter Code:
+
+
+```python
+ble.send_command(CMD.SEND_TIME_DATA, "")
+```
+
+
+<img src="/Fast Robots Media/Lab 1/SendTimeData.png" alt="Alt text" style="display:block;" height="300">
+<figcaption>SEND_TIME_DATA Output</figcaption>
 
 #### Task 7
 
 
-## Discussion
+
+#### Task 8
+
+## Discussion and Conclusion (Lab 1A & 1B)
