@@ -69,7 +69,7 @@ links = [
 		{ url = "@/Nexus/index.md", name = "Cornell Nexus" },
 		
 	] },
-	{ url = "@/Resume/index.md", name = "Resume" },
+	{ url = "@/Docs/index.md", name = "Docs" },
 ]
 
 
