@@ -1,5 +1,5 @@
 +++
-title = "Resume"
+title = "Empty for now"
 [extra] 
 +++
 <!-- <div class="colored buttons centered">
