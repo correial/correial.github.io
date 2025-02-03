@@ -252,4 +252,4 @@ ble.send_command(CMD.SEND_TIME_DATA, "")
 
 #### Task 8
 
-## Discussion and Conclusion (Lab 1A & 1B)
+### Discussion and Conclusion (Lab 1A & 1B)
