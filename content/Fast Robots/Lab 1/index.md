@@ -37,7 +37,30 @@ From the video you can see the Artemis microphone successfully picking up the di
 
 #### Codebase and BLE Discussion
 
-STILL NEED TO DO THIS
+Bluetooth (specifically Bluetooth LE) at a high level is used to establish a connection between my computer and the Artemis: 
+
+- Bluetooth LE radio acts like a community bulletin board where Computers (community members) can connect to read the  board. If the radio is a bulletin board we call that a peripheral device and it is responsible for posting data. If the radio is a reader (central device) it reads from any of the bulletin boards. Essentially, central devices view the services, get the data, then move on, all within a few milliseconds allowing multiple central devices can get data from one peripheral.
+
+- Services are identified by unique numbers known as UUIDs. The ability to define services and characteristics depends on the radio you're using and its firmware. Bluetooth LE peripherals will provide services, which in turn provide characteristics.
+
+- There are four things that a central device can do with a characteristic: `Read`, `Write`, `Indicate`, and `Notify`
+
+The codebase is collection of source code files that make up our system. Some important components:
+
+- The Artemis' unique UUID and Mac address allow for undisrupted communication and transmission of BLExCharacteristics
+
+- ble_arduino.ino is the code running on the Artemis, edited in the Arduino IDE
+
+-  EString allows us to easily manipulate and send character arrays
+
+- Demo.ipynb is where you find the python code sending commands to the Artemis
+
+- Some relevant functions used to communicate between the computer and Artemis:
+    - `send_command(cmd_type, data)`to send a command
+    - `ble.connect()` and `ble.disconnect` to connect with the Artemis
+    - `receive_string(uuid)` to recieve a string from our board
+    - `start_notify(uuid, notification_handler)` to activate the notification handler
+    -  `ble.bytearray_to_string(byteArray)` to convert recieved data into string
 
 #### Configurations and Setup
 1. I started with installing venv: `python3 -m pip install --user virtualenv`
@@ -247,9 +270,48 @@ ble.send_command(CMD.SEND_TIME_DATA, "")
 <figcaption>SEND_TIME_DATA Output</figcaption>
 
 #### Task 7
+I created a second array to store fahrenheit temperatures readings with the same length as the one used in task 6. Each element in both arrays (`millisArray[]` and `tempArray[]`) correspond to each other. The command `GET_TEMP_READINGS` loops through both arrays concurrently and sends each temperature reading with a time stamp. The notification handler parses these strings and add populate the data into two lists. 
 
+```c++
+case GET_TEMP_READINGS: {
+            
+    int Millis_Cur2 = 0;
+    float temp_f_cur = 0;
+    
+    if (!success) {
+        return;
+    }
+    
+    for (int i = 0; i < 24; i++){ 
+    Millis_Cur2 = millis();
+    float temp_f_cur = getTempDegF();
+    millisArray[i] = Millis_Cur2;
+    tempArray[i] = temp_f_cur;
+    }
+    
+    for (int x = 0; x < 24; x++){ 
+    tx_estring_value.clear();
+    tx_estring_value.append("T: ");
+    tx_estring_value.append(millisArray[x]);
+    tx_estring_value.append(" , ");
+    tx_estring_value.append("F: ");
+    tx_estring_value.append(tempArray[x]);
+    tx_characteristic_string.writeValue(tx_estring_value.c_str());
+    }
+    
+break; 
+}
+```
 
+<img src="/Fast Robots Media/Lab 1/MillisandTemp.png" alt="Alt text" style="display:block;" height="300">
+<figcaption>Temp and Time Output</figcaption>
 
 #### Task 8
 
+
+
 ### Discussion and Conclusion (Lab 1A & 1B)
+
+1. Learned about what commands are responsible for communication between my computer and Artemis
+2. At first I was fairly confused about the relationship between different data types and their byte size. However, the later questions in the lab taught me the bytes that correspond to these data values and the most efficient way to send them to the computer depending on the task
+3. The largest problem I faced was understanding the parameters needed for the notification handler!
