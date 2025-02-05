@@ -39,7 +39,7 @@ From the video you can see the Artemis microphone successfully picking up the di
 
 Bluetooth (specifically Bluetooth LE) at a high level is used to establish a connection between my computer and the Artemis: 
 
-- Bluetooth LE radio acts like a community bulletin board where Computers (community members) can connect to read the  board. If the radio is a bulletin board we call that a peripheral device and it is responsible for posting data. If the radio is a reader (central device) it reads from any of the bulletin boards. Essentially, central devices view the services, get the data, then move on, all within a few milliseconds allowing multiple central devices can get data from one peripheral.
+- Bluetooth LE radio acts like a community bulletin board where Computers (community members) can connect to read the board. If the radio is a bulletin board we call that a peripheral device (the Artemis in this case) and it is responsible for posting data. If the radio is a reader (central device) it reads from any of the bulletin boards. Essentially, central devices view the services, get the data, then move on, all within a few milliseconds allowing multiple central devices can get data from one peripheral.
 
 - Services are identified by unique numbers known as UUIDs. The ability to define services and characteristics depends on the radio you're using and its firmware. Bluetooth LE peripherals will provide services, which in turn provide characteristics.
 
@@ -51,12 +51,14 @@ The codebase is collection of source code files that make up our system. Some im
 
 - ble_arduino.ino is the code running on the Artemis, edited in the Arduino IDE
 
--  EString allows us to easily manipulate and send character arrays
+-  EString is used when transmitting strings from the Artemis to your computer
+
+- RobotCommand.h is used when handling a robot command that the Artemis receives and is of the string format `<cmd_type>:<value1> <value2>|<value3>|…`
 
 - Demo.ipynb is where you find the python code sending commands to the Artemis
 
 - Some relevant functions used to communicate between the computer and Artemis:
-    - `send_command(cmd_type, data)`to send a command
+    - `send_command(cmd_type, data)` to send a command
     - `ble.connect()` and `ble.disconnect` to connect with the Artemis
     - `receive_string(uuid)` to recieve a string from our board
     - `start_notify(uuid, notification_handler)` to activate the notification handler
@@ -99,7 +101,7 @@ ble.connect()
 <figcaption>Successful BLE Connection</figcaption>
 
 #### Task 1
-I sent a string value from my computer to the Artemis board using the  `ECHO` command and the computer recieved and printed an augmented string
+I sent a string value from my computer to the Artemis board using the  `ECHO` command and the computer recieved and printed the augmented string
 
 Arduino Code:
 
@@ -181,7 +183,7 @@ ble.send_command(CMD.SEND_THREE_FLOATS, "3.14|2.22|8.89")
 <figcaption>SEND_THREE_FLOATS Output</figcaption>
 
 #### Task 3
-I added a `GET_TIME_MILLIS` which makes the robot reply write a string to the string characteristic. Note that `GET_TIME_MILLIS` had to be added to the `cmd_types.py` file.
+I added a `GET_TIME_MILLIS` which makes the robot reply write a string to the string characteristic. `GET_TIME_MILLIS` had to be added to the `cmd_types.py` file. `GET_TIME_MILLIS` had to be added to `cmd_types.py` to run. Note that the output looks the same as in task 4.
 
 ```c++
 case GET_TIME_MILLIS:
@@ -196,6 +198,7 @@ case GET_TIME_MILLIS:
         
         break;
 ```
+
 #### Task 4
 I setup a `notification_handler` function to receive the string value from the Artemis board and, in the callback function, extract the time from the string.
 
@@ -217,7 +220,7 @@ ble.send_command(CMD.GET_TIME_MILLIS, "")
 <figcaption>Notification Handler Output</figcaption>
 
 #### Task 5
-I made a twenty-five step loop that gets the current time in milliseconds using the `GET_TIME_MILLIS` function to then be processed by `notification_handler()`. From my output shown below you can see that there was an average 33.5 ms gap between the prints. This translates to 29.85 message transmissions per second. With each message being 9 bytes, this results an effective data transfer rate of **269 bytes per second** for this method.
+I made a twenty-five step loop that gets the current time in milliseconds using the `GET_TIME_MILLIS` function to then be processed by `notification_handler()`. From my output shown below you can see that there was an average 33.5 ms gap between the prints. This translates to 29.85 message transmissions per second. With each message being 9 bytes (1 char per each string sent), this results an effective data transfer rate of **269 bytes per second** for this method.
 
 ```python
 x = 0
@@ -230,7 +233,7 @@ while x < 25:
 <figcaption>GET_TIME_MILLIS Loop Output</figcaption>
 
 #### Task 6
-I created a command `SEND_TIME_DATA` that loops though to add generated time steps via the `millis()` function and then stores them in an array. Then, in `SEND_TIME_DATA` I loop through the array and send each data point as a string to my laptop to be processed.
+I created a command `SEND_TIME_DATA` that loops though to add generated time steps via the `millis()` function and then stores them in an array. Then, in `SEND_TIME_DATA` I loop through the array and send each data point as a string to my laptop to be processed. `SEND_TIME_DATA` had to be added to the `cmd_types.py` file. Note that `millisArray[i]` is defined as a global array.
 
 Arduino Code
 ```c++
@@ -270,7 +273,7 @@ ble.send_command(CMD.SEND_TIME_DATA, "")
 <figcaption>SEND_TIME_DATA Output</figcaption>
 
 #### Task 7
-I created a second array to store fahrenheit temperatures readings with the same length as the one used in task 6. Each element in both arrays (`millisArray[]` and `tempArray[]`) correspond to each other. The command `GET_TEMP_READINGS` loops through both arrays concurrently and sends each temperature reading with a time stamp. The notification handler parses these strings and add populate the data into two lists. 
+I created a second array to store fahrenheit temperature readings with the same length as the one used in task 6. Each index in both global arrays (`millisArray[]` and `tempArray[]`) correspond to each other. The command `GET_TEMP_READINGS` loops through both arrays concurrently and sends each temperature reading with a time stamp. The notification handler parses these strings and populates the data into two lists. Note that `GET_TEMP_READINGS` had to be added to the `cmd_types.py` file. 
 
 ```c++
 case GET_TEMP_READINGS: {
@@ -308,17 +311,17 @@ break;
 
 #### Task 8
 
-When it comes to rate, it is clear from the time steps in tasks 5 vs. 6 that method one is considerably slower at recording data than method two. This is because method one has to wait until the Artemis sends data to the computer after every round of collection before recording again. This could prove more useful if real-time decisions need to be made from sensor data. The second method on the other hand can effectively record data as record data as fast as its slowest sensor thus produces data that may be more accurate but at the expense of a delayed reception on the client's end. This could result in a slower response time from the robot and thus is less applicable if the robot needs to make time-sensitive decisions from sensor data. For an open-loop test where we do not care as much about real-time feedback, method two would likely be more useful as the faster data recording would provide higher resolution. 
+Rate wise, it is clear from the time steps in tasks 5 vs. 6 that method one is considerably slower at recording data than method two. This is because method one has to wait until the Artemis sends data to the computer after every round of collection before recording again. Instead, the second method can effectively record data as fast as its slowest sensor, thus producing data that may be more accurate but at the expense of a delayed reception on the client's end. This could result in a slower response time from the robot and thus is less applicable if the robot needs to make time-sensitive decisions from sensor data. For an open-loop test where we do not care as much about real-time feedback, method two may be more useful as the faster data recording would provide higher resolution. 
 
 In order to determine how quickly the second method records data, I had to increase the number of loop iterations to 100 in order to see a difference in time steps. The first element is `T: 104510ms` and the 100th is `T: 104512ms` which translates to data being recorded every 0.02ms on average (considerably faster than the 33.5 ms gap in task 5).
 
-The `millis()` int variable and `getTempDegF()` int variable are both stored as ints of 4 bytes each for a total of 8 bytes between the two. As printed by the Arduino IDE output, global variables use 30648 bytes. If the Artemis board has 384 kB of RAM, then 353,352 bytes remain allowing us to store a total of 353,352 bytes/8 bytes = 44,169 data points without running out of memory.
+The `millis()` int variable and `getTempDegF()` int variable are both stored as ints of 4 bytes each for a total of 8 bytes. As printed by the Arduino IDE output, global variables use 30648 bytes. If the Artemis board has 384 kB of RAM, then 353,352 bytes remain allowing us to store a total of 353,352 bytes/8 bytes = 44,169 data points without running out of memory.
  
 
 ### Discussion and Conclusion (Lab 1A & 1B)
 
-1. Learned about what functions are responsible for communication between my computer and Artemis and how the commands (ECHO, GET_TIME_MILLIS, etc. are passed in)
-2. At first I was fairly confused about the relationship between different data types and their byte size. However, the later questions in the lab taught me the bytes that correspond to these data values and the most efficient way to send them to the computer depending on the task
+1. Learned about what functions are responsible for communication between my computer and Artemis and how the commands (ECHO, GET_TIME_MILLIS, etc.) are passed in via `RobotCommand.h`
+2. At first I was confused about the relationship between different data types and their byte size. However, the later questions in the lab made it clear how ints vs. strings require different number of bytes as well as how Estring char are used to send those types to the computer 
 3. The largest problem I faced was understanding the parameters needed for the notification handler!
 
 ### Collaboration
