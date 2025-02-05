@@ -28,6 +28,6 @@ title = "About Me"
 
 <div style="clear: both;"></div> <!-- This ensures content below the images is cleared of float or flex constraints. -->
 
-<p>Junior at Cornell University studying Mechanical Engineering with a focus in Robotics.</p>
+<p>Junior at Cornell University studying Mechanical Engineering with a focus in Robotics</p>
 
-<p>Here on campus I am on the Cornell Nexus Project Team as well as the Cornell United Soccer Club Team.</p>
+<p>Here on campus I am on the Cornell Nexus Project Team as well as the Cornell United Soccer Club Team. I will be updating my site through the semester to reflect my progress in Fast Robot MAE4190/ECE4160</p>

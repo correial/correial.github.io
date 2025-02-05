@@ -35,7 +35,7 @@ From the video you can see the Artemis microphone successfully picking up the di
 
 ## Lab 1b
 
-#### Codebase and BLE Discussion
+#### Codebase and BLE 
 
 Bluetooth (specifically Bluetooth LE) at a high level is used to establish a connection between my computer and the Artemis: 
 
@@ -308,10 +308,19 @@ break;
 
 #### Task 8
 
+When it comes to rate, it is clear from the time steps in tasks 5 vs. 6 that method one is considerably slower at recording data than method two. This is because method one has to wait until the Artemis sends data to the computer after every round of collection before recording again. This could prove more useful if real-time decisions need to be made from sensor data. The second method on the other hand can effectively record data as record data as fast as its slowest sensor thus produces data that may be more accurate but at the expense of a delayed reception on the client's end. This could result in a slower response time from the robot and thus is less applicable if the robot needs to make time-sensitive decisions from sensor data. For an open-loop test where we do not care as much about real-time feedback, method two would likely be more useful as the faster data recording would provide higher resolution. 
 
+In order to determine how quickly the second method records data, I had to increase the number of loop iterations to 100 in order to see a difference in time steps. The first element is `T: 104510ms` and the 100th is `T: 104512ms` which translates to data being recorded every 0.02ms on average (considerably faster than the 33.5 ms gap in task 5).
+
+The `millis()` int variable and `getTempDegF()` int variable are both stored as ints of 4 bytes each for a total of 8 bytes between the two. As printed by the Arduino IDE output, global variables use 30648 bytes. If the Artemis board has 384 kB of RAM, then 353,352 bytes remain allowing us to store a total of 353,352 bytes/8 bytes = 44,169 data points without running out of memory.
+ 
 
 ### Discussion and Conclusion (Lab 1A & 1B)
 
-1. Learned about what commands are responsible for communication between my computer and Artemis
+1. Learned about what functions are responsible for communication between my computer and Artemis and how the commands (ECHO, GET_TIME_MILLIS, etc. are passed in)
 2. At first I was fairly confused about the relationship between different data types and their byte size. However, the later questions in the lab taught me the bytes that correspond to these data values and the most efficient way to send them to the computer depending on the task
 3. The largest problem I faced was understanding the parameters needed for the notification handler!
+
+### Collaboration
+
+I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Daria's site](https://pages.github.coecis.cornell.edu/dak267/dak267.github.io/#page-top) for code debugging and specific help with `SEND_TIME_DATA` and `GET_TEMP_READINGS`. ChatGPT was used for Lab 1B code debugging and website formatting/development.
