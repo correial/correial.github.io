@@ -47,7 +47,7 @@
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;gBEvY_Qi8gs&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
 &lt;figcaption&gt;Micrphone output test&lt;&#x2F;figcaption&gt;
 &lt;h2 id=&quot;lab-1b&quot;&gt;Lab 1b&lt;&#x2F;h2&gt;
-&lt;h4 id=&quot;codebase-and-ble-discussion&quot;&gt;Codebase and BLE Discussion&lt;&#x2F;h4&gt;
+&lt;h4 id=&quot;codebase-and-ble&quot;&gt;Codebase and BLE&lt;&#x2F;h4&gt;
 &lt;p&gt;Bluetooth (specifically Bluetooth LE) at a high level is used to establish a connection between my computer and the Artemis:&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -294,12 +294,17 @@
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 1&#x2F;MillisandTemp.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot; height=&quot;300&quot;&gt;
 &lt;figcaption&gt;Temp and Time Output&lt;&#x2F;figcaption&gt;
 &lt;h4 id=&quot;task-8&quot;&gt;Task 8&lt;&#x2F;h4&gt;
+&lt;p&gt;When it comes to rate, it is clear from the time steps in tasks 5 vs. 6 that method one is considerably slower at recording data than method two. This is because method one has to wait until the Artemis sends data to the computer after every round of collection before recording again. This could prove more useful if real-time decisions need to be made from sensor data. The second method on the other hand can effectively record data as record data as fast as its slowest sensor thus produces data that may be more accurate but at the expense of a delayed reception on the client’s end. This could result in a slower response time from the robot and thus is less applicable if the robot needs to make time-sensitive decisions from sensor data. For an open-loop test where we do not care as much about real-time feedback, method two would likely be more useful as the faster data recording would provide higher resolution.&lt;&#x2F;p&gt;
+&lt;p&gt;In order to determine how quickly the second method records data, I had to increase the number of loop iterations to 100 in order to see a difference in time steps. The first element is &lt;code&gt;T: 104510ms&lt;&#x2F;code&gt; and the 100th is &lt;code&gt;T: 104512ms&lt;&#x2F;code&gt; which translates to data being recorded every 0.02ms on average (considerably faster than the 33.5 ms gap in task 5).&lt;&#x2F;p&gt;
+&lt;p&gt;The &lt;code&gt;millis()&lt;&#x2F;code&gt; int variable and &lt;code&gt;getTempDegF()&lt;&#x2F;code&gt; int variable are both stored as ints of 4 bytes each for a total of 8 bytes between the two. As printed by the Arduino IDE output, global variables use 30648 bytes. If the Artemis board has 384 kB of RAM, then 353,352 bytes remain allowing us to store a total of 353,352 bytes&#x2F;8 bytes = 44,169 data points without running out of memory.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;discussion-and-conclusion-lab-1a-1b&quot;&gt;Discussion and Conclusion (Lab 1A &amp;amp; 1B)&lt;&#x2F;h3&gt;
 &lt;ol&gt;
-&lt;li&gt;Learned about what commands are responsible for communication between my computer and Artemis&lt;&#x2F;li&gt;
+&lt;li&gt;Learned about what functions are responsible for communication between my computer and Artemis and how the commands (ECHO, GET_TIME_MILLIS, etc. are passed in)&lt;&#x2F;li&gt;
 &lt;li&gt;At first I was fairly confused about the relationship between different data types and their byte size. However, the later questions in the lab taught me the bytes that correspond to these data values and the most efficient way to send them to the computer depending on the task&lt;&#x2F;li&gt;
 &lt;li&gt;The largest problem I faced was understanding the parameters needed for the notification handler!&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
+&lt;h3 id=&quot;collaboration&quot;&gt;Collaboration&lt;&#x2F;h3&gt;
+&lt;p&gt;I collaborated extensively on this project with &lt;a href=&quot;https:&#x2F;&#x2F;jack-d-long.github.io&#x2F;&quot;&gt;Jack Long&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;trevordales.github.io&#x2F;&quot;&gt;Trevor Dales&lt;&#x2F;a&gt;. I referenced &lt;a href=&quot;https:&#x2F;&#x2F;pages.github.coecis.cornell.edu&#x2F;dak267&#x2F;dak267.github.io&#x2F;#page-top&quot;&gt;Daria’s site&lt;&#x2F;a&gt; for code debugging and specific help with &lt;code&gt;SEND_TIME_DATA&lt;&#x2F;code&gt; and &lt;code&gt;GET_TEMP_READINGS&lt;&#x2F;code&gt;. ChatGPT was used for Lab 1B code debugging and website formatting&#x2F;development.&lt;&#x2F;p&gt;
 </description>
       </item>
     </channel>
