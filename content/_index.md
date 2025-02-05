@@ -30,5 +30,5 @@ title = "About Me"
 
 <p>Junior at Cornell University studying Mechanical Engineering with a focus in Robotics</p>
 
-<p>Here on campus I am on the Cornell Nexus Project Team as well as the Cornell United Soccer Club Team. I will be updating my site through the semester to reflect my progress in Fast Robots MAE4190/ECE4160
+<p>Here on campus I am on the Cornell Nexus Project Team as well as the Cornell United Soccer Club Team. I will be updating my site through the semester to reflect my progress in Fast Robots MAE4190/ECE4160.
 </p>
