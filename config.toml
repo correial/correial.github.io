@@ -33,6 +33,7 @@ index_format = "fuse_json"
 [extra]
 
 # default_theme = "dark"
+katex = true
 
 favicon = "/favicon.png"
 accent_color = "#ff7800"
