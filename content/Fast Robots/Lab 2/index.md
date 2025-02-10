@@ -236,7 +236,6 @@ After making those changes, I noticed that there was still drift from the gyrosc
 I played around with adjusting the sampling frequency to see how it changes the accuracy of my estiamted angles. I noticed that
 
 CHANGE CHANGE CHANGE CHANGE
- While increasing the sampling frequency improves the accuracy on gyroscope readings by reducing the integration error over shorter time intervals, higher sampling frequencies may increase power consumption and processing load. To overcome the limitations of each sensor, a complimentary filter was used to compute pitch and roll values that are accurate and stable.
 CHANGE CHANGE CHANGE CHANGE
 
 #### Complementary Filter Implementation
