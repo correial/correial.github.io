@@ -203,9 +203,54 @@ $$ f_c = \frac{1}{2\pi RC} $$
 <img src="/Fast Robots Media/Lab 2/LPF_FFT_RAW_OSS.png" alt="Alt text" style="display:block;">
 <figcaption>Raw and Fourier Transform Data with Low Pass Filter - Hand Osscilations</figcaption>
 
+<br /> 
+
+<img src="/Fast Robots Media/Lab 2/TableBang.png" alt="Alt text" style="display:block;">
+<figcaption>Raw and Fourier Transform Data with Low Pass Filter - Hitting Table</figcaption>
+
+You can see that the low pass filter is successful in reducing unwanted noise in the accelerometer data. This is especially clear in the final graphic (Raw and Fourier Transform Data with Low Pass Filter - Hand Osscilations) where the LPF works to ignore the spikes in magnitude that comes from hitting the table.
+
 ### Gyroscope
+Equations to compute pitch, roll, and yaw angles from the gyroscope:
 
+```c++
+dt = (micros()-last_time)/1000000.;
+last_time = micros();
+pitch_g = pitch_g + myICM.gyrX()*dt;
+roll_g = roll_g + myICM.gyrY()*dt;
+yaw_g = yaw_g + myICM.gyrZ()*dt;
+```
 
+#### Gyroscope vs. Accelerometer Data
+
+When first collecting the gyroscope readings I noticed that the data did not match the accelerometer data. I realized that due to the default axis of the gyroscope, the pitch and roll for the gyroscope really corresponded to the roll and pitch of the accelerometer respectively (and make the pitch negative).
+
+<img src="/Fast Robots Media/Lab 2/initialFlip.png" alt="Alt text" style="display:block;">
+<figcaption>Initial Gyro vs. Accelerometer Readings (Flipping Needed) </figcaption>
+
+After making those changes, I noticed that there was still drift from the gyroscope over time, likely due from integrating the error in each step. However, I did find it interesting that the gyroscop provided cleaner and smoother data during quick direction changed (going from -90 to 90 degrees and back). Thus while the gyroscope alone may not be highly accurate, it is still stable. 
+
+<img src="/Fast Robots Media/Lab 2/RawGyro.png" alt="Alt text" style="display:block;">
+<figcaption>Raw Gyro Data vs. Accelerometer Readings </figcaption>
+
+I played around with adjusting the sampling frequency to see how it changes the accuracy of my estiamted angles. I noticed that
+
+CHANGE CHANGE CHANGE CHANGE
+ While increasing the sampling frequency improves the accuracy on gyroscope readings by reducing the integration error over shorter time intervals, higher sampling frequencies may increase power consumption and processing load. To overcome the limitations of each sensor, a complimentary filter was used to compute pitch and roll values that are accurate and stable.
+CHANGE CHANGE CHANGE CHANGE
+
+#### Complementary Filter Implementation
+
+The following code was used to imlpement my complementary filter:
+
+```c++
+roll_comp[i] = (roll_comp[i-1] + roll_G[i]*dt)*(1-alpha) + (rollLPF[i]*alpha);
+pitch_comp[i] = (pitch_comp[i-1] + pitch_G[i]*dt)*(1-alpha) + (pitchLPF[i]*alpha);
+```
+<img src="/Fast Robots Media/Lab 2/CompResults.png" alt="Alt text" style="display:block;">
+<figcaption>Complementary Filter Gyro vs. Low Pass Filter Accelerometer</figcaption>
+
+From the results you can that with an alpha value of 0.0876 the combined measurements from the accelerometer and gyroscope significantly increases stability (which comes from the gyroscope) and accuracy (from the low pass filter accelerometer).
 
 ### RC Stunts
 
@@ -218,4 +263,4 @@ $$ f_c = \frac{1}{2\pi RC} $$
 The car is quick at direction changing and accelerating. When spinning it is able to hold its position on the ground without drifting much. Note that the car's speed can not be changed while moving, it can only stop and change directions. 
 
 ### Collaboration
-I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Daria's site](https://pages.github.coecis.cornell.edu/dak267/dak267.github.io/#page-top) for code debugging and specific help with `SEND_TIME_DATA` and `GET_TEMP_READINGS`. ChatGPT was heavily used to write plotting code for the Raw, FFT and LPF data. It also helped me write my FFT function as the provided link had some syntax error and missing pictures.
+I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Daria's site](https://pages.github.coecis.cornell.edu/dak267/dak267.github.io/#page-top) for code debugging in my complementary filter as well as visually understanding how to effectively display my plots. ChatGPT was heavily used to write plotting code for the Raw, FFT and LPF data. It also helped me write my FFT function as the provided link had some syntax error and missing pictures.
