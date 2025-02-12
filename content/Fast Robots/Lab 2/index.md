@@ -233,10 +233,7 @@ After making those changes, I noticed that there was still drift from the gyrosc
 <img src="/Fast Robots Media/Lab 2/RawGyro.png" alt="Alt text" style="display:block;">
 <figcaption>Raw Gyro Data vs. Accelerometer Readings </figcaption>
 
-I played around with adjusting the sampling frequency to see how it changes the accuracy of my estiamted angles. I noticed that
-
-CHANGE CHANGE CHANGE CHANGE
-CHANGE CHANGE CHANGE CHANGE
+To observe the effects of changing the sampling rate, I added delays in my case `GET_ACC_READINGS` command code FOR loop to slow down the data collection. I noticed that a delay of 10 ms added some choppiness to the plotting without a significant increase it collection time. However, adding a 100 ms delay significantly increased the data collection time as well as the choppiness in the plot. The gyroscope, which I found was especially good at tracking quick changes of direction smoothly is now not nearly as clear. Additionally, you can see the plot jumping around for smoother IMU movements as the gaps between time intervals is increased. 
 
 #### Complementary Filter Implementation
 
@@ -250,6 +247,55 @@ pitch_comp[i] = (pitch_comp[i-1] + pitch_G[i]*dt)*(1-alpha) + (pitchLPF[i]*alpha
 <figcaption>Complementary Filter Gyro vs. Low Pass Filter Accelerometer</figcaption>
 
 From the results you can that with an alpha value of 0.0876 the combined measurements from the accelerometer and gyroscope significantly increases stability (which comes from the gyroscope) and accuracy (from the low pass filter accelerometer).
+
+### Sampling Data
+
+#### Speed Up
+I took a few measured to speed up the execution time for my main loop
+
+1. Removed the part in my code where I wait for IMU data to be ready to move through the loop. Instead I not check if data is ready in the main loop and store it in my array
+2. Removed debugging print statments in my command to get IMU data
+
+#### Data Storage
+
+I decided that it would be best to have seperate arrays for storing accelerometer and gyroscope data rather than one large one. This was partially because I decided that it would be easier to organize and parse through the data using different arrays to compartmentalize the data before sending them over bluetooth. I also found it easier to create a CSV from the seperate arrays in Jupyter. 
+
+Each of these arrays contain floats as the gyroscope and acceleration naturally output decimal values. With a double data type being twice the size of a float (64 vs 32 bits), I decided that a float was the best data type for these sensor arrays. 
+
+I have a total of 10 floats arrays for a total of 40 bytes at a time:
+- 1 for time
+- 2 for accelerometer roll and pitch
+- 2 for LPF roll and pitch
+- 3 for gyroscope roll, pitch, and yaw
+- 2 for complementary filter data
+
+In lab 1b global variables use 30,648 bytes. This lab we added the above arrays to send IMU data. If the Artemis board has 384 kB of RAM, then 353,352 bytes of dynamic memor remain which allow us to store 353,352/40 = 8833 data points. With an average step time of 2.86 ms (shown below) we get a sample rate of 349.65 Hz. This corresponds to **25.26 seconds of IMU data collection**.
+
+#### 5 Seconds of IMU Data
+
+<img src="/Fast Robots Media/Lab 2/5SecSample.png" alt="Alt text" height = 50 style="display:block;">
+<figcaption>Proving 5 Seconds of IMU Data</figcaption>
+
+I used one of my CSV files as an example of collecting at least 5 seconds of data and sending it over bluetooth. To do this I took the difference between the first time stamp and the last time stamp in my `proximityFinal.csv` file:
+
+```c++
+import pandas as pd
+
+# Load the CSV file
+df = pd.read_csv("proximityFinal.csv")
+
+# Get the first and last time values
+first_time = df["Time"].iloc[0]
+last_time = df["Time"].iloc[-1]
+
+# Compute the difference
+time_difference = last_time - first_time
+time_difference_sec = time_difference/1000
+time_difference_avg = (last_time - first_time)/len(df["Time"])
+
+print(f"Time difference: {time_difference_sec} seconds")
+print(f"Average step time difference: {time_difference_avg} ms")
+```
 
 ### RC Stunts
 
