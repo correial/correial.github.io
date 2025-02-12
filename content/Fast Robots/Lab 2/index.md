@@ -56,7 +56,7 @@ As you can see from the frozen frames, the accelerometer is very accurate with v
 
 #### Data Collection and Plotting Code
 
-The following code was used to collect the data in arrays and then use Juypter to pipe the data from the Artemis into a CSV file and graph. The graphs will be shown later in the labs for analysis
+The following code was used to collect the data in arrays and then use Juypter to pipe the data from the Artemis into a CSV file and graph. Note that as I added more arrays to store more data (LPF, Gyro, Complementary Filter) I simply added more columns to the csv via the notification handler. The graphs will be shown later in the lab for analysis.
 
 Artemis Aruino Code:
 ```c++
@@ -106,7 +106,6 @@ break;
 }
 ```
 
-
 Jupyter Code: 
 ```python
 def notification_handler(sender, data):
@@ -131,51 +130,6 @@ def notification_handler(sender, data):
     except Exception as e:
         print(f"Error parsing data: {e}")
 
-```
-```python
-ble.start_notify(ble.uuid['RX_STRING'], notification_handler)
-print("Started notifications on RX_STRING")
-```
-
-```python
-# Clear the CSV file before sending the command
-with open("data.csv", "w") as f:
-    f.write("time,pitch,roll\n")  # Rewriting headers after clearing data
-
-# Send the command to get accelerometer readings
-ble.send_command(CMD.GET_ACC_READINGS, "")
-```
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Load the CSV file
-df = pd.read_csv("data.csv")
-
-# Plot Pitch and Roll as separate graphs
-fig, axs = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
-
-# Plot Pitch
-axs[0].plot(df["time"], df["pitch"], label="Pitch", color="blue")
-axs[0].set_ylabel("Pitch (°)")
-axs[0].set_title("Pitch vs Time")
-axs[0].set_ylim(-250, 250)  # Set y-axis limits
-axs[0].legend()
-axs[0].grid()
-
-# Plot Roll
-axs[1].plot(df["time"], df["roll"], label="Roll", color="red")
-axs[1].set_xlabel("Time (ms)")
-axs[1].set_ylabel("Roll (°)")
-axs[1].set_title("Roll vs Time")
-axs[1].set_ylim(-250, 250)  # Set y-axis limits
-axs[1].legend()
-axs[1].grid()
-
-# Show the plots
-plt.tight_layout()
-plt.show()
 ```
 
 #### Fourier Transform and Low Pass Filter Plotting
@@ -251,10 +205,126 @@ From the results you can that with an alpha value of 0.0876 the combined measure
 ### Sampling Data
 
 #### Speed Up
-I took a few measured to speed up the execution time for my main loop
+I took a few measures to speed up the execution time for my main loop:
 
-1. Removed the part in my code where I wait for IMU data to be ready to move through the loop. Instead I not check if data is ready in the main loop and store it in my array
+1. Removed the part in my code where I wait for IMU data to be ready (for example checking`(myICM.dataReady())` to move through the command loop. Instead I check if data is ready in the main loop and if it is I call the function `collectIMU()` to compute the pitch, roll and yaw. After computing I add them to their respective arrays and iterate through those arrays with a different command (that does not affect the resolution as data is already collected).
 2. Removed debugging print statments in my command to get IMU data
+3. I use flags to start/stop data recording
+
+While my IMU was able to sample new values farily quickly (~ 350 Hz) after cleaning up my code, the main loop runs significantly faster than my IMU produces new data. This is evident when comparing the `IMU_Count` variable (which only runs when data is collected) to the `Total_Loops` (which counts the number of times cycled through the main). The `Total_Loops` is larger on the magnitude of 10-100x which means that the IMU is the holdup.
+
+Code of main loop function:
+
+```c++
+void
+loop()
+{
+    // Listen for connections
+    BLEDevice central = BLE.central();
+
+    // If a central is connected to the peripheral
+    if (central) {
+      // comment for speed
+        // Serial.print("Connected to: ");
+        // Serial.println(central.address());
+
+        // While central is connected
+        while (central.connected()) {
+          write_data();
+          
+          if (myICM.dataReady() && start) {
+              collectIMU();
+              myICM.getAGMT();
+          }
+
+          Total_Loops = Total_Loops + 1;
+
+            // Read data
+            read_data();
+        }
+    }
+}
+```
+
+collectIMU() function:
+
+```c++
+void
+collectIMU(){
+        
+        int i = IMU_Count;
+
+        float Millis_Cur2 = 0;
+        float pitch_a = 0;
+        float roll_a = 0;
+
+        // LPF Var
+        double pitch_a_LPF[] = {0, 0};
+        double roll_a_LPF[] = {0, 0};
+        const int n = 1;
+        const float alpha = 0.0876;
+
+        // Gyro Var
+        float dt = 0;
+        unsigned long last_time = micros();
+        float pitch_g =0;
+        float roll_g = 0;
+        float yaw_g = 0;
+
+        myICM.getAGMT();
+
+        Millis_Cur2 = millis();
+
+        // Raw Pitch and Roll
+        pitch_a = atan2(myICM.accX(), myICM.accZ()) * 180 / M_PI; 
+        roll_a  = atan2(myICM.accY(), myICM.accZ()) * 180 / M_PI; 
+        
+        millisArray[i] = Millis_Cur2;
+        RollArray[i] = roll_a;
+        PitchArray[i] = pitch_a;
+
+        // LPF
+        pitch_a_LPF[n] = alpha*pitch_a + (1-alpha)*pitch_a_LPF[n-1];
+        pitch_a_LPF[n-1] = pitch_a_LPF[n];
+        pitchLPF[i] = pitch_a_LPF[n];
+        roll_a_LPF[n] = alpha*roll_a + (1-alpha)*roll_a_LPF[n-1];
+        roll_a_LPF[n-1] = roll_a_LPF[n];
+        rollLPF[i] = roll_a_LPF[n];
+
+        //Gyro Data
+
+        dt = (micros()-last_time)/1000000.;
+        last_time = micros();
+        pitch_g = pitch_g + myICM.gyrX()*dt;
+        roll_g = roll_g + myICM.gyrY()*dt;
+        yaw_g = yaw_g + myICM.gyrZ()*dt;
+
+        roll_G[i] = pitch_g; //pitch and roll are flipped
+        pitch_G[i] = -1*roll_g; //pitch and roll are flipped
+        yaw_G[i] = yaw_g;
+
+        // Complementary Filter Data
+
+        roll_comp[i] = (roll_comp[i-1] + roll_G[i]*dt)*(1-alpha) + (rollLPF[i]*alpha);
+        pitch_comp[i] = (pitch_comp[i-1] + pitch_G[i]*dt)*(1-alpha) + (pitchLPF[i]*alpha);
+
+      IMU_Count++;
+    }
+```
+
+Jupyter code to start/stop data collection via setting a global start variable to `1` or `0` within the `START_DATA_COLLECTION` and `START_DATA_COLLECTION` commands:
+```c++
+import time
+
+ble.send_command(CMD.START_DATA_COLLECTION, "")
+time.sleep(5)
+ble.send_command(CMD.STOP_DATA_COLLECTION, "")
+```
+
+The old `case GET_ACC_READINGS` command was called in Jupyter after stopping data collection to then re-popoulate the csv file with new values.
+
+<img src="/Fast Robots Media/Lab 2/CSVPOP.png" alt="Alt text" height = 250 style="display:block;">
+<figcaption>CSV proving population of time-stamped IMU data in arrays</figcaption>
 
 #### Data Storage
 
@@ -273,7 +343,7 @@ In lab 1b global variables use 30,648 bytes. This lab we added the above arrays 
 
 #### 5 Seconds of IMU Data
 
-<img src="/Fast Robots Media/Lab 2/5SecSample.png" alt="Alt text" height = 50 style="display:block;">
+<img src="/Fast Robots Media/Lab 2/5SecSample.png" alt="Alt text" style="display:block;">
 <figcaption>Proving 5 Seconds of IMU Data</figcaption>
 
 I used one of my CSV files as an example of collecting at least 5 seconds of data and sending it over bluetooth. To do this I took the difference between the first time stamp and the last time stamp in my `proximityFinal.csv` file:
