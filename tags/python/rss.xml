@@ -437,9 +437,16 @@
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 3&#x2F;AngleandDistance.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
 &lt;figcaption&gt;Angle and Distance Collection&lt;&#x2F;figcaption&gt;
 &lt;h3 id=&quot;tof-accuracy&quot;&gt;ToF Accuracy&lt;&#x2F;h3&gt;
-&lt;p&gt;To quantify the&lt;&#x2F;p&gt;
+&lt;p&gt;To quantify the accuracy of the ToF sensors I collected 10 seconds of data at three mid-range distances and graphed the data vs. time as well as the set target distance:&lt;&#x2F;p&gt;
+&lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 3&#x2F;100mm.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
+&lt;figcaption&gt;100 mm Test&lt;&#x2F;figcaption&gt;
+&lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 3&#x2F;150mm.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
+&lt;figcaption&gt;150 mm Test&lt;&#x2F;figcaption&gt;
+&lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 3&#x2F;200mm.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
+&lt;figcaption&gt;200 mm Test&lt;&#x2F;figcaption&gt;
+&lt;p&gt;All around from the images you can see that the time of flight sensors are farily accurate at a range of distances. While the testing setup was fairly precise, a few milimeters of variance is likely due to the human error in trying to perfectly align the placement of the sensors along my ruler. Nonetheless there is certainly some higher frequency noise in the ToF sensors which could likely be reduced by a LPF.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;collaboration&quot;&gt;Collaboration&lt;&#x2F;h3&gt;
-&lt;p&gt;I collaborated extensively on this project with &lt;a href=&quot;https:&#x2F;&#x2F;jack-d-long.github.io&#x2F;&quot;&gt;Jack Long&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;trevordales.github.io&#x2F;&quot;&gt;Trevor Dales&lt;&#x2F;a&gt;. I referenced &lt;a href=&quot;https:&#x2F;&#x2F;pages.github.coecis.cornell.edu&#x2F;dak267&#x2F;dak267.github.io&#x2F;#page-top&quot;&gt;Daria’s site&lt;&#x2F;a&gt; as well as &lt;a href=&quot;https:&#x2F;&#x2F;mavisfu.github.io&#x2F;lab3.html&quot;&gt;Wenyi’s site&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;I collaborated extensively on this project with &lt;a href=&quot;https:&#x2F;&#x2F;jack-d-long.github.io&#x2F;&quot;&gt;Jack Long&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;trevordales.github.io&#x2F;&quot;&gt;Trevor Dales&lt;&#x2F;a&gt;. I referenced &lt;a href=&quot;https:&#x2F;&#x2F;mavisfu.github.io&#x2F;lab3.html&quot;&gt;Wenyi’s site&lt;&#x2F;a&gt; for my wiring setup as well as the sketch used to help print out distance sensors in my serial monitor to test speed. ChatGPT was used to help plot CSV data and format graphs.&lt;&#x2F;p&gt;
 </description>
       </item>
       <item>
