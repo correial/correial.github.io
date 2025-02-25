@@ -148,7 +148,19 @@ Here is another graph where I collected ToF and IMU (using the complementary fil
 
 ### ToF Accuracy
 
-To quantify the 
+To quantify the accuracy of the ToF sensors I collected 10 seconds of data at three mid-range distances and graphed the data vs. time as well as the set target distance:  
+
+<img src="/Fast Robots Media/Lab 3/100mm.png" alt="Alt text" style="display:block;">
+<figcaption>100 mm Test</figcaption>
+
+<img src="/Fast Robots Media/Lab 3/150mm.png" alt="Alt text" style="display:block;">
+<figcaption>150 mm Test</figcaption>
+
+<img src="/Fast Robots Media/Lab 3/200mm.png" alt="Alt text" style="display:block;">
+<figcaption>200 mm Test</figcaption>
+
+
+All around from the images you can see that the time of flight sensors are farily accurate at a range of distances. While the testing setup was fairly precise, a few milimeters of variance is likely due to the human error in trying to perfectly align the placement of the sensors along my ruler. Nonetheless there is certainly some higher frequency noise in the ToF sensors which could likely be reduced by a LPF.
 
 ### Collaboration
-I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Daria's site](https://pages.github.coecis.cornell.edu/dak267/dak267.github.io/#page-top) as well as [Wenyi's site](https://mavisfu.github.io/lab3.html)
+I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Wenyi's site](https://mavisfu.github.io/lab3.html) for my wiring setup as well as the sketch used to help print out distance sensors in my serial monitor to test speed. ChatGPT was used to help plot CSV data and format graphs. 
