@@ -165,7 +165,7 @@ Here I created a Time vs. Distance graph of ToF data collected on the Artemis th
 <img src="/Fast Robots Media/Lab 3/Mid Range Parallel.png" alt="Alt text" style="display:block;">
 <figcaption>Distance Testing via Bluetooth</figcaption>
 
-Here is another graph where I collected ToF and IMU (using the complementary filter) data and graphed them on the same time axis:
+Here is another graph where I simultaniously collected ToF and IMU data for 5 seconds over bluetooth and graphed them on the same time axis. The complementary filter from Lab 2 was used for the IMU data:
 
 <img src="/Fast Robots Media/Lab 3/AngleandDistance.png" alt="Alt text" style="display:block;">
 <figcaption>Angle and Distance Collection</figcaption>
