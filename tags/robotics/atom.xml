@@ -473,7 +473,7 @@
 &lt;p&gt;Here I created a Time vs. Distance graph of ToF data collected on the Artemis then sent over bluetooth:&lt;&#x2F;p&gt;
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 3&#x2F;Mid Range Parallel.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
 &lt;figcaption&gt;Distance Testing via Bluetooth&lt;&#x2F;figcaption&gt;
-&lt;p&gt;Here is another graph where I collected ToF and IMU (using the complementary filter) data and graphed them on the same time axis:&lt;&#x2F;p&gt;
+&lt;p&gt;Here is another graph where I simultaniously collected ToF and IMU data for 5 seconds over bluetooth and graphed them on the same time axis. The complementary filter from Lab 2 was used for the IMU data:&lt;&#x2F;p&gt;
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 3&#x2F;AngleandDistance.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
 &lt;figcaption&gt;Angle and Distance Collection&lt;&#x2F;figcaption&gt;
 &lt;h3 id=&quot;tof-accuracy&quot;&gt;ToF Accuracy&lt;&#x2F;h3&gt;
