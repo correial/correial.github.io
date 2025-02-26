@@ -10,7 +10,29 @@ tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontr
 
 Two time of flight sensors will used and ultimately mounted on the car to provide different points of view to help the robot naviate; one of my ToF sensors will be mounted on the front center of the car and the other between the two wheels on one side. This will allow me to keep a set distance from walls to the side as well as avoid obstacles and navigate with vision at the front.
 
-Since we want to use two ToF flight sensors which have the same I2C address, we use the XSHUT pin on one of the sensors to shut off one ToF which modifying the I2C address of the other. It can then be restarted again to function simultaniously with the other.
+Since we want to use two ToF flight sensors which have the same I2C address, we use the XSHUT pin on one of the sensors to shut off one ToF which modifying the I2C address of the other. It can then be restarted again to function simultaniously with the other. Below is the code to execute this initialization:
+
+```c++
+  pinMode(SHUTDOWN_PIN, OUTPUT);
+  
+  // Set the address of TOF1 to 0xf5
+  digitalWrite(SHUTDOWN_PIN, LOW); // Shut down TOF2
+  distanceSensor1.begin();
+  distanceSensor1.setI2CAddress(0xf5);
+  if (distanceSensor1.begin() != 0) //Begin returns 0 on a good init
+  {
+    Serial.println("1 Initialized");
+    distanceSensor1.setDistanceModeLong();
+      
+  }
+  digitalWrite(SHUTDOWN_PIN, HIGH); // Restart TOF2
+
+  if (distanceSensor2.begin() != 0) //Begin returns 0 on a good init
+  {
+    Serial.println("2 Initialized");
+    distanceSensor2.setDistanceModeLong();
+  }
+```
 
 Per the data ToF [data sheet](https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf), the default I2C address is 0x52 (`0b 0101 0010`). 
 
@@ -22,12 +44,12 @@ Using the `Example05_Wire_I2C.ino` example sketch, I was able to scan for connec
 
 From the scan we can see the Tof device address as 0x29 (`0b 0010 1001`). Since the least significant bit is used to indicate read/write, it is soley a matter of shifting the 7-bit 0x29 address left by one bit to make space for the read/write bit that appears in the data sheet. Thus, the scanned address matches the data sheet as it is just a shift left away from matching the 0x52 8-bit address.
 
-<br>
+### Physical Connection
+
+In the below images you can see the battery leads soldered to the QWICC connect cables and the ToF sensors wired as outlined in the schematic:
 
 <img src="/Fast Robots Media/Lab 3/wiring.png" alt="Alt text" style="display:block;">
-<figcaption>Wiring Diagram</figcaption>
-
-### Physical Connection
+<figcaption>Wiring Schematic</figcaption>
 
 <img src="/Fast Robots Media/Lab 3/quikk connections.png" height = 350 alt="Alt text" style="display:block;">
 <figcaption>ToF sensor connected to QWIIC breakout board</figcaption>
@@ -35,16 +57,18 @@ From the scan we can see the Tof device address as 0x29 (`0b 0010 1001`). Since 
 <img src="/Fast Robots Media/Lab 3/Battery Pack.png" height = 300 alt="Alt text" style="display:block;">
 <figcaption>Soldered Battery Pack</figcaption>
 
-From the video we can see the two ToF sensors working in parallel. I noticed that when the clearance for my ToF sensor drops below 20 mm, they tend to output 0 mm. However, this is to be expected since according to section 3.3 of the sensor [data sheet](https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf) the minimum ranging distance is 4 cm. Overall, the sensors are accurate outside of this range.
+### Two ToF Sensors In Parallel Test 
 
-I decided to use the long Tof mode `distanceSensor1.setDistanceModeLong()`. According to the [data sheet](https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf), "long distance mode allows the longest possible ranging distance of 4 m to be reached." In a classroom atmosphere I believe that this longer distance will prove more useful for mapping even though it is at the cost of higher resolution at shorter distances.  
+From the following video we can see the two ToF sensors working in parallel. I noticed that when the clearance for my ToF sensor drops below 20 mm, they tend to output 0 mm. However, this is to be expected since according to section 3.3 of the sensor [data sheet](https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf), the minimum ranging distance is 4 cm. Overall, the sensors are accurate outside of this range.
+
+I decided to use the long ToF mode `distanceSensor1.setDistanceModeLong()`. According to the [data sheet](https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf): "long distance mode allows the longest possible ranging distance of 4 m to be reached." In a classroom environment I believe that this longer distance will prove more useful for mapping even though it is at the cost of higher resolution at shorter distances.  
 
 <iframe width="450" height="315" src="https://www.youtube.com/embed/vdYf5x8ExiM" allowfullscreen></iframe>
 <figcaption>Two ToF Sensor Testing</figcaption>
 
 ### ToF Sensor Speed
 
-I tested the speed of my ToF sensors in two ways. The first was by running a script to print locally in the serial monitor and the other by testing the speed when called over bluetooth. 
+I tested the speed of my ToF sensors in two ways. The first was by printing the Artemis clock to the Serial as fast as possible and printing new ToF sensor data from both sensors only when available. The second was by testing the speed when called over bluetooth and compare it to the IMU. 
 
 1. I used the following function to visualize and quantify the gap between each ToF data collection:
 
@@ -132,7 +156,7 @@ After collecting data for 5 seconds (using my `START_DATA_COLLECTION` and `STOP_
 <img src="/Fast Robots Media/Lab 3/ToF and IMU Counter.png" height=75 alt="Alt text" style="display:block;">
 <figcaption>IMU and ToF Counters</figcaption>
 
-From the counters we can see that the ToF sensors were considerably slower than the IMU at recieving data. After 5 seconds of data collection this corresponds **10 Hz for the ToF and 98 Hz for the IMU**. 
+From the counters we can see that the ToF sensors were considerably slower than the IMU at recieving data and thus would be the limiting factor. After 5 seconds of data collection this corresponds **10 Hz for the ToF and 98 Hz for the IMU**. 
 
 ### ToF Sensor Data (Over Bluetooth)
 
