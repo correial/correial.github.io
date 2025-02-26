@@ -118,9 +118,9 @@ void loop() {
     </figure>
 </div>
 
-From the above three images you can see that the average gap between ToF sensor collection is 90 ms, corresponding to a rate of **11 Hz**.
+From the above three images you can see that the average gap between ToF sensor collection is 90 ms, corresponding to a rate of **11 Hz**. Both sensor 1 and sensor two print at roughly the same rate.
 
-2. I created a function `collectTOF()` to collect my ToF data. It is called from the main loop when one of the two ToF sensors are ready AND my `start` flag is true. The function populates a time and two ToF arrays with data. The data is parsed through via `case GET_TOF_READINGS` to be sent over bluetooth.
+2. I created a function `collectTOF()` to collect my ToF data in order to ensure the code doesn't hang while it waits for the sensor to finish a measurement. It is called from the main loop when one of the two ToF sensors are ready AND my `start` flag is true. The function populates a time and two ToF arrays with data. The data is parsed through via case `GET_TOF_READINGS` to be sent over bluetooth.
 
 ```c++
 void 
@@ -151,7 +151,7 @@ collectTOF(){
 }
 ```
 
-After collecting data for 5 seconds (using my `START_DATA_COLLECTION` and `STOP_DATA_COLLECTION` command flags) the following number data points were collected from the IMU and ToF sensors relative to the number of cycles through my main loop. This method helps eliminate the delay from print statments in the first speed test:
+After collecting data for 5 seconds (using my `START_DATA_COLLECTION` and `STOP_DATA_COLLECTION` command flags) the following number data points were collected from the IMU (function shown in Lab 2) and ToF sensors relative to the number of cycles through my main loop. This method helps eliminate the delay from print statments in the first speed test:
 
 <img src="/Fast Robots Media/Lab 3/ToF and IMU Counter.png" height=75 alt="Alt text" style="display:block;">
 <figcaption>IMU and ToF Counters</figcaption>
@@ -160,7 +160,7 @@ From the counters we can see that the ToF sensors were considerably slower than 
 
 ### ToF Sensor Data (Over Bluetooth)
 
-Here I created a Time v Distance graph of ToF data collected on the Artemis then sent over bluetooth:
+Here I created a Time vs. Distance graph of ToF data collected on the Artemis then sent over bluetooth:
 
 <img src="/Fast Robots Media/Lab 3/Mid Range Parallel.png" alt="Alt text" style="display:block;">
 <figcaption>Distance Testing via Bluetooth</figcaption>
@@ -172,7 +172,7 @@ Here is another graph where I collected ToF and IMU (using the complementary fil
 
 ### ToF Accuracy
 
-To quantify the accuracy of the ToF sensors I collected 10 seconds of data at three mid-range distances and graphed the data vs. time as well as the set target distance:  
+To quantify the accuracy of the ToF sensors I collected 10 seconds of data at three distances and graphed the data vs. time as well as the set target distance:  
 
 <img src="/Fast Robots Media/Lab 3/100mm.png" alt="Alt text" style="display:block;">
 <figcaption>100 mm Test</figcaption>
@@ -184,7 +184,7 @@ To quantify the accuracy of the ToF sensors I collected 10 seconds of data at th
 <figcaption>200 mm Test</figcaption>
 
 
-All around from the images you can see that the time of flight sensors are farily accurate at a range of distances. While the testing setup was fairly precise, a few milimeters of variance is likely due to the human error in trying to perfectly align the placement of the sensors along my ruler. Nonetheless there is certainly some higher frequency noise in the ToF sensors which could likely be reduced by a LPF.
+All around from the graphs you can see that the time of flight sensors are fairly accurate at a range of distances. While the testing setup was fairly precise, a few milimeters of variance is likely due to the human error in trying to perfectly align the placement of the sensors along my ruler. Nonetheless there is certainly some higher frequency noise in the ToF sensors which could likely be reduced by a LPF.
 
 ### Collaboration
-I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Wenyi's site](https://mavisfu.github.io/lab3.html) for my wiring setup as well as the sketch used to help print out distance sensors in my serial monitor to test speed. ChatGPT was used to help plot CSV data and format graphs. 
+I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Wenyi's site](https://mavisfu.github.io/lab3.html) for my wiring setup, ToF sensor initiation, and sketch used to  print out distance sensors in my serial monitor to test speed. ChatGPT was used to help plot CSV data and format graphs. 
