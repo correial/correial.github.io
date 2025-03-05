@@ -8,7 +8,7 @@ tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontr
 
 ## Prelab
 
-### System Wiring Schematic 
+### System Wiring 
 
 I decided to use pins **13, A14, A15, A16** for control on the Artemis. This pin proximity does increase risk of shorting connections, however it allows for a more compact design and greater area of the board to be used for mounting to the car rather than having to avoid largely seperated pins. Furthermore, according to the data sheet pins marked with a (~) indicate PWM capability:
 
@@ -98,15 +98,6 @@ void loop() {
 <iframe width="450" height="315" src="https://www.youtube.com/embed/fX4sXga9YXM"allowfullscreen></iframe>
 <figcaption>Both Wheels Spinning (with battery)</figcaption>
 
-### Lower PWM Limit
-
-I found that the minimum PWM value for which the robot needs to move forward, backward, and on axis by starting with a arbitrary small value and increasing it by 5 until the car no longer stalled but instead moved very slowly. I found that on a fully charged battery the forward and backward lower limit PWD value us **35** and **110** for spinning on axis.
-
-Here is a video of testing using those PWM values to go forward, in reverse, then spin on axis in both directions:
-
-<iframe width="450" height="315" src="https://www.youtube.com/embed/UzNFp05yqZ8"allowfullscreen></iframe>
-<figcaption>Lower PWM Limit</figcaption>
-
 ### Complete Hardware Integration on Car
 
 Below are images of the car after mounting all components. Holes were drilled and zip ties were used to strap down the IMU and both motor drivers at the front. Zip ties were also used to bundle the Artemis and 750mAh battery as well as for wire managment. Double sided tape was used to mount the two ToF sensors (one on the side and one at the front) and the Artemis/battery module at the rear.
@@ -128,9 +119,18 @@ Below are images of the car after mounting all components. Holes were drilled an
 <img src="/Fast Robots Media/Lab 4/front.png" height="400" alt="Alt text" style="display:block;">
 <figcaption>Front of Car</figcaption>
 
+### Lower PWM Limit
+
+I found that the minimum PWM value for which the robot needs to move forward, backward, and on axis by starting with a arbitrary small value and increasing it by 5 until the car no longer stalled but instead moved very slowly. I found that on a fully charged battery the forward and backward lower limit PWD value us **35** and **110** for spinning on axis.
+
+Here is a video of testing using those PWM values to go forward, in reverse, then spin on axis in both directions:
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/UzNFp05yqZ8"allowfullscreen></iframe>
+<figcaption>Lower PWM Limit</figcaption>
+
 ### Open Loop Testing and Calibration
 
-When first testing the car's straightline preformance, it would instantly begin to veer to the right. I also noticed that when traveling in reverse the car had the same issue where the right side lacked power. To account for this I added a calibration factor to increase the PWM signal for the right set of wheels. Initially I went about this by simply adding a calibration factor to the PWM rather than scaling it via a multiplicative calibration factor. While I was able to get the car fairly straight doing this, it only really worked for a set speed. Given this, I decided to switch to a scaling calibration factor which you can see implemented in the code below. I started both scaling factors at 1 and increased them by .05 until I recievd steady straightline results.
+When first testing the car's straightline preformance, it would instantly begin to veer to the right. I also noticed that when traveling in reverse the car had the same issue where the right side lacked power. To account for this I added a calibration factor to increase the PWM signal for the right set of wheels. Initially I went about this by simply adding a calibration factor to the PWM rather than scaling it via a multiplicative calibration factor. While I was able to get the car fairly straight doing this, it only really worked for a set speed. Given this, I decided to switch to a scaling calibration factor which you can see implemented in the code below. I started both scaling factors at 1 and increased them by .05 until I recieved steady straightline results (visible in the Open Loop Test video).
 
 ```c++
 void forward() {
