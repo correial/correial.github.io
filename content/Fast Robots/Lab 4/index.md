@@ -10,14 +10,14 @@ tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontr
 
 ### System Wiring 
 
-I decided to use pins **13, A14, A15, A16** for control on the Artemis. This pin proximity does increase risk of shorting connections, however it allows for a more compact design and greater area of the board to be used for mounting to the car rather than having to avoid largely seperated pins. Furthermore, according to the data sheet pins marked with a (~) indicate PWM capability:
+I decided to use pins **13, A14, A15, A16** for control on the Artemis. This pin proximity does increase risk of shorting connections, however it allows for a more compact design and greater area of the board to be used for mounting to the car rather than having to avoid largely seperated pins. Furthermore, according to the data sheet pins marked with a (~) indicate PWM capability which is required to send signals to the motor drivers.
 
 <img src="/Fast Robots Media/Lab 4/Artemis Schematic.png" height = 450 alt="Alt text" style="display:block;">
 <figcaption>Artemis Schematic</figcaption>
 
-The diagram for the mtor driver schematic is shown as below:
+The motor driver electrical schematic used on my car is shown below:
 
-<img src="/Fast Robots Media/Lab 4/Wiring Schematic.png" alt="Alt text" style="display:block;">
+<img src="/Fast Robots Media/Lab 4/Wiring Schematic 2.png" alt="Alt text" style="display:block;">
 <figcaption>Drivetrain System Wiring Schematic</figcaption>
 
 ### Battery Discussion
@@ -28,7 +28,7 @@ The Artemis and the motor drivers/motors are powered by separate batteries to he
 
 ### Power Supply and Oscilloscope Hookup
 
-One motor driver was tested at a time by connecting the four `OUT` pins to the scope while connecting `VIN` and `GND` to the power supply to power the driver. The power supply is set to **3.7V** to simulate the 3.7V that would be supplied by the 850mAh motor battery. Below is a picture of the setup (the power supply and oscilloscope probing wires are drawn in to show the setup used to obtain the PWM signal before I soldered the parts to the car):
+One motor driver was tested at a time by connecting the inner two `OUT` pins to the positive scope probe and the outer two `OUT` pins to the ground scope probe. I also connected `VIN` and `GND` to the power supply to power the driver. The power supply is set to **3.7V** to simulate the 3.7V that would be supplied by the 850mAh motor battery. Below is a picture of the setup (the power supply and oscilloscope probing wires are drawn in to show the setup used to obtain the PWM signal before I soldered the parts to the car):
 
 <img src="/Fast Robots Media/Lab 4/scopepower.png" height = 550 alt="Alt text" style="display:block;">
 <figcaption>Scope and Power Supply Connection to Motor Driver</figcaption>
@@ -56,12 +56,12 @@ The `analogWrite(AB1IN_LEFT,100)` line indicated a 40% (100/255) duty cycle to p
 
 ### Motor Testing
 
-The above code used to see the PWM signals on the scope were also usde to run one side of wheels:
+The above code used to see the PWM signals on the scope were also used to run one side of wheels:
 
 <iframe width="450" height="315" src="https://www.youtube.com/embed/HVZoQLOt5kM"allowfullscreen></iframe>
 <figcaption>One Side Test</figcaption>
 
-After confirming that the motor drivers worked by repeating the samed procedures for both motor drivers, I tried running the car all together using the 850 mAh battery using the following code:
+After confirming that both motor drivers successfully powered the motors, I tried running the car all together using the 850 mAh battery using the following code:
 
 ```c++
 #define AB1IN_LEFT 15
@@ -121,7 +121,7 @@ Below are images of the car after mounting all components. Holes were drilled an
 
 ### Lower PWM Limit
 
-I found that the minimum PWM value for which the robot needs to move forward, backward, and on axis by starting with a arbitrary small value and increasing it by 5 until the car no longer stalled but instead moved very slowly. I found that on a fully charged battery the forward and backward lower limit PWD value us **35** and **110** for spinning on axis.
+I found that the minimum PWM value for which the robot needs to move forward, backward, and on axis by starting with a arbitrary small value and increasing it by 5 until the car no longer stalled. I found that on a fully charged battery the forward and backward lower limit PWM value is **35** and **110** for spinning on axis.
 
 Here is a video of testing using those PWM values to go forward, in reverse, then spin on axis in both directions:
 
@@ -168,7 +168,7 @@ void turnLeft() {
 - `correction_b` is the calibration factor for reverse wheel rotation (currently **1.3**)
 
 
-To test a range of car capabilities, I had the car move straight, then in reverse, then rotate on axis in both directions before moving straight left at the end (note each tile is 13"x13"):
+To test a range of car capabilities, I had the car move straight, then in reverse, then rotate on axis in both directions before moving straight left at the end (note each tile is 13"x13"). The sequence of actions is set in the main loop() which gets called when the `START_DATA_COLLECTION` command flag is run over bluetooth.
 
 <iframe width="450" height="315" src="https://www.youtube.com/embed/Zv6U8mtepHE"allowfullscreen></iframe>
 <figcaption>Open Loop Test</figcaption>
