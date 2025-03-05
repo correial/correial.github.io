@@ -56,7 +56,47 @@ The `analogWrite(AB1IN_LEFT,100)` line indicated a 40% (100/255) duty cycle to p
 
 ### Motor Testing
 
+The above code used to see the PWM signals on the scope were also usde to run one side of wheels:
 
+<iframe width="450" height="315" src="https://www.youtube.com/embed/HVZoQLOt5kM"allowfullscreen></iframe>
+<figcaption>One Side Test</figcaption>
+
+After confirming that the motor drivers worked by repeating the samed procedures for both motor drivers, I tried running the car all together using the 850 mAh battery using the following code:
+
+```c++
+#define AB1IN_LEFT 15
+#define AB2IN_LEFT 16
+#define AB1IN_RIGHT 13
+#define AB2IN_RIGHT 14
+
+void setup() {
+  pinMode(AB1IN_LEFT,OUTPUT);
+  pinMode(AB2IN_LEFT,OUTPUT);
+  pinMode(AB1IN_RIGHT,OUTPUT);
+  pinMode(AB2IN_RIGHT,OUTPUT);
+}
+void forward() {
+  analogWrite(AB1IN_LEFT,60); 
+  analogWrite(AB2IN_LEFT,0);
+  analogWrite(AB1IN_RIGHT,60); 
+  analogWrite(AB2IN_RIGHT,0);
+}
+void backward() {
+  analogWrite(AB1IN_LEFT,0); 
+  analogWrite(AB2IN_LEFT,60);
+  analogWrite(AB1IN_RIGHT,0); 
+  analogWrite(AB2IN_RIGHT,60);
+}
+void loop() {
+  forward();
+  delay(2000);
+  backward();
+  delay(2000);
+}
+```
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/fX4sXga9YXM"allowfullscreen></iframe>
+<figcaption>Both Wheels Spinning (with battery)</figcaption>
 
 ### Lower PWM Limit
 
@@ -90,6 +130,44 @@ Below are images of the car after mounting all components. Holes were drilled an
 
 ### Open Loop Testing and Calibration
 
+When first testing the car's straightline preformance, it would instantly begin to veer to the right. I also noticed that when traveling in reverse the car had the same issue where the right side lacked power. To account for this I added a calibration factor to increase the PWM signal for the right set of wheels. Initially I went about this by simply adding a calibration factor to the PWM rather than scaling it via a multiplicative calibration factor. While I was able to get the car fairly straight doing this, it only really worked for a set speed. Given this, I decided to switch to a scaling calibration factor which you can see implemented in the code below. I started both scaling factors at 1 and increased them by .05 until I recievd steady straightline results.
+
+```c++
+void forward() {
+  analogWrite(AB1IN_LEFT,speedLine); 
+  analogWrite(AB2IN_LEFT,0);
+  analogWrite(AB1IN_RIGHT,0); 
+  analogWrite(AB2IN_RIGHT,speedLine*correction_f);
+}
+
+void backward() {
+  analogWrite(AB1IN_LEFT,0); 
+  analogWrite(AB2IN_LEFT,speedLine);
+  analogWrite(AB1IN_RIGHT,speedLine*correction_b); 
+  analogWrite(AB2IN_RIGHT,0);
+}
+
+void turnRight() {
+  analogWrite(AB1IN_LEFT,0); 
+  analogWrite(AB2IN_LEFT,speedTurn);
+  analogWrite(AB1IN_RIGHT,0); 
+  analogWrite(AB2IN_RIGHT,speedTurn*correction_f);
+}
+
+void turnLeft() {
+  analogWrite(AB1IN_LEFT,speedTurn); 
+  analogWrite(AB2IN_LEFT,0);
+  analogWrite(AB1IN_RIGHT,speedTurn*correction_b); 
+  analogWrite(AB2IN_RIGHT,0);
+}
+```
+
+- `speedLine` is the stright line speed for forward and reverse 
+- `speedTurn` is the turning speed
+- `correction_f` is the calibration factor for forward wheel rotation (currently **1.05**)
+- `correction_b` is the calibration factor for reverse wheel rotation (currently **1.3**)
+
+
 To test a range of car capabilities, I had the car move straight, then in reverse, then rotate on axis in both directions before moving straight left at the end (note each tile is 13"x13"):
 
 <iframe width="450" height="315" src="https://www.youtube.com/embed/Zv6U8mtepHE"allowfullscreen></iframe>
@@ -97,4 +175,4 @@ To test a range of car capabilities, I had the car move straight, then in revers
 
 ### Collaboration
 
-I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Wenyi's site](https://mavisfu.github.io/lab3.html) for my wiring setup, initial motor control code, and general outline for creating funtions to drive forward, spin right, etc. Special thanks to all TA's that helped debug my electronics and car for hours before we realized I probably needed a new one!
+I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Wenyi's site](https://mavisfu.github.io/lab3.html) for my wiring setup, initial motor testing code, and general outline for creating funtions to drive forward, spin right, etc. Special thanks to all TA's that helped debug my electronics and car for hours before we realized I probably needed a new one!
