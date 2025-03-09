@@ -1,7 +1,7 @@
 +++
 title = "Lab 4: Motor Drivers and Open Loop Control"
 date = 2025-03-04
-weight = 0
+weight = 9
 [taxonomies]
 tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontroller" ]
 +++
