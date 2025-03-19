@@ -210,6 +210,10 @@
 &lt;p&gt;To start thinking about future applications of the PID controller I added waypoints that the robot would turn to. During navigation this can be implemented along side of the straightline PID controller; the robot doesn’t need to turn in an arc while it drives, instead it can drive straight, pivot, then drive straight again. In this example, the robot turns from 0 degrees to 90 degrees, then back to 0 degrees, then ends at 120 degrees:&lt;&#x2F;p&gt;
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;RQPXhLDtzWo&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
 &lt;figcaption&gt;Waypoints&lt;&#x2F;figcaption&gt;
+&lt;p&gt;Here is the graph for my waypoint setting:&lt;&#x2F;p&gt;
+&lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 6&#x2F;WayPoint Setting.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
+&lt;figcaption&gt;Waypoint Data&lt;&#x2F;figcaption&gt;
+&lt;p&gt;You can certianly see some more derivative kick, but again, it is filtered out well by the LPF.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;sampling-time-discussion&quot;&gt;Sampling Time Discussion&lt;&#x2F;h2&gt;
 &lt;p&gt;The IMU polling rate is set to 1.1 kHz in the line: &lt;code&gt;success &amp;amp;= (myICM.enableDMPSensor(INV_ICM20948_SENSOR_GAME_ROTATION_VECTOR) == ICM_20948_Stat_Ok);&lt;&#x2F;code&gt;. The sampling time for our system is the DMP output rate ODR which is set in my setup function: &lt;code&gt;success &amp;amp;= (myICM.setDMPODRrate(DMP_ODR_Reg_Quat6, 2) == ICM_20948_Stat_Ok);&lt;&#x2F;code&gt;. The 2 sets the ODR to an overall 549 Hz, plenty fast for the PID turning loop.&lt;&#x2F;p&gt;
 &lt;p&gt;$$ ODR = \frac{\text{DMP running rate}}{\text{ODR setting}} - 1 $$&lt;&#x2F;p&gt;
