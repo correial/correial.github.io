@@ -221,7 +221,7 @@ You can certainly see some derivative kick with the increased Kd term, however, 
 
 ## Turning Way Points
 
-To start thinking about future applications of the PID controller I added waypoints that the robot would turn to and set at which will be applicable during navigation. The robot turns from 0 degrees to 90 degrees, then back to 0 degrees, then ends at 120 degrees:
+To start thinking about future applications of the PID controller I added waypoints that the robot would turn to. During navigation this can be implemented along side of the straightline PID controller; the robot doesn't need to turn in an arc while it drives, instead it can drive straight, pivot, then drive straight again. In this example, the robot turns from 0 degrees to 90 degrees, then back to 0 degrees, then ends at 120 degrees:
 
 <iframe width="450" height="315" src="https://www.youtube.com/embed/RQPXhLDtzWo"allowfullscreen></iframe>
 <figcaption>Waypoints</figcaption>
