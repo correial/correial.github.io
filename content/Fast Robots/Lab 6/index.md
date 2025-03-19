@@ -12,7 +12,7 @@ PID code is handeled and sent over bluetooth in a very similar fasion to lab 5!
 
 ### Main Function
 
-Here is the turning PID part of the main function. The PID turning code waits until the `start_time_pid_turn` flag is set to 1 via the `PID_TURN_CONTROL` command that is responsible for sending the Kp, Ki, and Kd gains as well as sending the starting flag: `ble.send_command(CMD.PID_TURN_CONTROL, "1.5|0|40|90") # P|I|D`. The `getDMP` and `runPIDROT()` functions are explain in detail in the next sections. After the turning PID arrays are filled, the robot is then instructed to stop and the `sendPIDTURNData()` function is used to loop through all arrays and send them over to be piped into a CVS via my notification hander.
+Here is the turning PID part of the main function. The PID turning code waits until the `start_time_pid_turn` flag is set to 1 via the `PID_TURN_CONTROL` command that is responsible for sending the Kp, Ki, and Kd gains as well as sending the starting flag: `ble.send_command(CMD.PID_TURN_CONTROL, "1.5|0|40|90") # P|I|D`. The `getDMP` and `runPIDROT()` functions are covered in detail in the next sections. After the turning PID arrays are filled, the robot is then instructed to stop and the `sendPIDTURNData()` function is used to loop through all arrays and send them over to be piped into a CVS via my notification hander.
 
 **Main Loop**
 
@@ -59,7 +59,7 @@ def notification_handler(sender, data):
       print(f"Error parsing data: {e}")```
 ```
 
-## getDMP() Function
+### getDMP() Function
 
 The `getDMP` function is responsible for updating the global `yaw_gy` varaible whenever there is a new value, and if there is not (pretty rare) the previous value is used to avoid storing zeros in the yaw array. Also, it is worth noting that if we were deriving the yaw angle by taking the integral of the gyroscope's angular velocity over time it would not make sense to then take the derivative. However, since the DMP is providing discrete angle readings, we do need to take these derivatives still. 
 
@@ -98,7 +98,7 @@ void getDMP() {
 }
 ```
 
-## runPIDRot() Function
+### runPIDRot() Function
 
 The `runPIDRot()` function is responsible for calling the PID turning function (`pid_turn_Gyro()`) and ensuring that it has the current distance fed in as a parameter. The function also populates the PID arrays
 
@@ -118,7 +118,7 @@ void runPIDRot() {
 }
 ```
 
-## pid_turn_Gyro() Function
+### pid_turn_Gyro() Function
 
 There are three key aspects of the PID turning control loop:
 1. When I first was testing with proportional and PD control, I noticed that what was really happening was that the speed was just jumping between the floor value on the negative and positve side as seen in the below image. To account for this I decided that I needed to map the calculated speeds (in the range of 0-255) into the range scaled to my robot's floor and ceiling. This was done using the Arduino map command `speedTurn_set_mapped = map(speedTurn_set, 0, 255, minSpeedTurn, maxSpeedTurn)`. The result is that my robot is now using real PID control (which will be shown later) rather than just going between the PWM floor.
@@ -128,7 +128,7 @@ There are three key aspects of the PID turning control loop:
 
 2. A low pass filter was used on the derivative term to reduce noise and the effect of derivative kick. The alpha value was calculated through a slight trial and error method where I found a balance between reducing noise (from the filtered_d_term) but also reducing speed/amplitude as fast as possible when needing to slow down (from the current d_term). The alpha that optimized this trade off was **0.1**.
 
-3. While testing for hours I noticed that regardless of my gains (I tried Kd terms on the order of 1000), my robot would not be able to stop in time and over shot its target. I realized that it was not a coding issue but rather the cars inability to change directions fast enough. I also noticed that the overshoot only happened on the first approach– if I picked the car up and replaced it at the beginning location after it had been running for a while the car was able to stop perfectly. To account for this, I have the car "warm up" for 1 second at a low PWM before starting. This solved the issue completely!
+3. While testing for hours I noticed that regardless of my gains (I tried Kd terms on the order of 1000), my robot would not be able to stop in time and over shot its target. I realized that it was not a coding issue but rather the cars inability to change directions fast enough. I also noticed that the overshoot only happened on the first approach– if I picked the car up and replaced it at the beginning location after it had been running for a while the car was able to stop perfectly. To account for this, I have the car delay for 1 second at a low PWM before starting. This solved the issue completely!
 
 ```c++
 int pid_turn_Gyro(float Kp_turn, float Ki_turn, float Kd_turn, float pos_cur_turn, float targ_turn) {
@@ -171,7 +171,7 @@ int pid_turn_Gyro(float Kp_turn, float Ki_turn, float Kd_turn, float pos_cur_tur
     speedTurn_set_mapped = 0;
   }
 
-  // Crazy work around to avoid overshoot: "warm up"
+  // Delay to avoid overshoot
   if((time_cur_turn - start_time_pid_turn) < 1000 ){
     speedTurn_set_mapped = minSpeedTurn - 20;
     time_cur_turn = millis();
@@ -207,7 +207,7 @@ Here are my two final disturbance tests. The first is with **Kp=1.8** and **Kd=5
 <iframe width="450" height="315" src="https://www.youtube.com/embed/pXpwFAQoIhk"allowfullscreen></iframe>
 <figcaption>Disturbance Correction Kp=1.8 | Kd=50</figcaption>
 
-Here is the other final disturbance test with **Kp=1.65** and **Kd=130**. You can see that for these gains, the robot overshoots less but is just a little worst at re-aligning exactly at 90 degrees. Thus while it overshoots less, it does take slightly more time to re-adjust (with the increaed Kd gain that helps it slow down earlier). 
+Here is the other final disturbance test with **Kp=1.65** and **Kd=130**. You can see that for these gains, the robot overshoots less but is just a little worst at re-aligning exactly at 90 degrees. Thus while it overshoots less, it is slower when moving to a set angle (with the increaed Kd gain that helps it slow down earlier). 
 
 <iframe width="450" height="315" src="https://www.youtube.com/embed/S883NBawxys"allowfullscreen></iframe>
 <figcaption>Disturbance Correction Kp=1.65 | Kd=130</figcaption>
@@ -221,7 +221,10 @@ You can certainly see some derivative kick with the increased Kd term, however, 
 
 ## Turning Way Points
 
-To start thinking about future applications of the PID controller
+To start thinking about future applications of the PID controller I added waypoints that the robot would turn to and set at which will be applicable during navigation. The robot turns from 0 degrees to 90 degrees, then back to 0 degrees, then ends at 120 degrees:
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/RQPXhLDtzWo"allowfullscreen></iframe>
+<figcaption>Waypoints</figcaption>
 
 ## Sampling Time Discussion
 
