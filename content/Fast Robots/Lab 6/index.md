@@ -226,6 +226,13 @@ To start thinking about future applications of the PID controller I added waypoi
 <iframe width="450" height="315" src="https://www.youtube.com/embed/RQPXhLDtzWo"allowfullscreen></iframe>
 <figcaption>Waypoints</figcaption>
 
+Here is the graph for my waypoint setting:
+
+<img src="/Fast Robots Media/Lab 6/WayPoint Setting.png" alt="Alt text" style="display:block;">
+<figcaption>Waypoint Data</figcaption>
+
+You can certianly see some more derivative kick, but again, it is filtered out well by the LPF.
+
 ## Sampling Time Discussion
 
 The IMU polling rate is set to 1.1 kHz in the line: `success &= (myICM.enableDMPSensor(INV_ICM20948_SENSOR_GAME_ROTATION_VECTOR) == ICM_20948_Stat_Ok);`. The sampling time for our system is the DMP output rate ODR which is set in my setup function: `success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Quat6, 2) == ICM_20948_Stat_Ok);`. The 2 sets the ODR to an overall 549 Hz, plenty fast for the PID turning loop.
