@@ -8,7 +8,7 @@ tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontr
 
 ## Drag and Mass Estimations
 
-Starting with Newton's second law,  
+We can start with approximating the open-loop robot system as first-order using Newton's second law
 
 $$ F = ma = m\ddot{x} $$  
 
@@ -20,7 +20,7 @@ the dynamics of the system can be described in terms of second derivative of pos
 
 $$ \ddot{x} = -\frac{d}{m} \dot{x} + \frac{u}{m} $$  
 
-Then, we can represent the system in state space notation with the space vector
+Then, we can represent the system in state space notation with the state vector
 
 <div id="math-block"></div>
 <script>
@@ -65,7 +65,11 @@ $$
 m = \frac{-d \cdot t_{0.9}}{\ln(1 - 0.9)}
 $$
 
-I drove the car at the wall with a PWM value of 120 (in the range of values used for Lab 5). Below are the graphs showing the ToF data and corresponding velocity for the drive at the wall. The velocity was calculated by taking the difference in ToF values over the difference in time for each new ToF data. Data was piped into a CSV for later use via a notification handler with the same structure as used in Lab 5.
+I drove the car at the wall with a PWM value of 120 (in the range of values used for Lab 5) to collect data needed to estimate the above variables. Below are the graphs showing the ToF data and corresponding velocity for the drive at the wall. The velocity was calculated by taking the difference in ToF values over the difference in time for each new ToF data. Data was piped into a CSV for later use via a notification handler with the same structure as used in Lab 5.
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/Wv9554gjGbY"allowfullscreen></iframe>
+<figcaption>Drive at Wall</figcaption>
+
 
 <img src="/Fast Robots Media/Lab 7/ToFandVelo.png" alt="Alt text" style="display:block;">
 <figcaption>ToF and Velocity Data</figcaption>
@@ -145,7 +149,7 @@ Since we are only directly measuring ToF data *X*, the state space which will gi
 
 ### Initialize Python KF
 
-For the initial python simulation, the sampling time used for the Kalman filter was 95 ms, the same as my ToF rate. When I confirmed that the simulation was working, I then sped it up to the rate that my PID code loops runs on my arduino (20 ms). U_ss was calculated via u/step_size, where u = 120 and step size = 255. I estimated my ToF variance (dx = 30mm) by taking the average variance in data when statically measuring distance from the wall.
+For the initial python simulation, the sampling time used for the Kalman filter was 95 ms, the same as my ToF rate. When I confirmed that the simulation was working, I then sped it up to the rate that my PID code loop runs on my arduino (20 ms). U_ss was calculated via u/step_size, where u = 120 and step size = 255. I estimated my ToF variance (dx = 30mm) by taking the average variance in data when statically measuring distance from the wall.
 
 The below code was used to discretize my A and B matrices and define my C and state vector
 
@@ -245,7 +249,7 @@ Again, I felt as though my my Kalman values were tracking too close to my ToF, t
 
 After confirming that the simulation worked as expected, I integrated the code onto my car. The general workflow is as follows:
 
-The below code runs in the main loop without any delays. The pid_start flag is sent over a bluetooth command along with the PID gains. `runPIDLin()` is responsible for running the Kalman filter and passing the outputs into the PID logic function. After the data arrays are filled they are sent to the computer over artemis by the `sendPIDData()` function.
+The below code runs in the **main loop** without any delays. The pid_start flag is sent over a bluetooth command along with the PID gains. `runPIDLin()` is responsible for running the Kalman filter and passing the outputs into the PID logic function. After the data arrays are filled they are sent to the computer over artemis by the `sendPIDData()` function.
 
 ```c++
 if (pid_start) {
@@ -262,8 +266,8 @@ if (pid_start) {
 ```
 
 Below is the `runPIDLin()` function. We can break down each function called
-- `collectTOF()` collects the next ToF value and is responsible for setting the `update` variable to true if the ToF value is a new one or not. The ToF value (new or old) is added to the global TOF1 array.
-- `kalman()` is responsible for running the Kalman filter. Note that the `runPIDLin()` functions runs as fast as possible thus the kalman filter is heping to provide a distance measurment when new ToF values are not ready. I found that I had to scale my input speed value by 1000 for a better kalman response with from the state space dynamics
+- `collectTOF()` collects the next ToF value and is responsible for setting the `update` variable to true dependings on if the ToF value is new or not. The ToF value (new or old) is added to the global TOF1 array.
+- `kalman()` is responsible for running the Kalman filter. Note that the `runPIDLin()` functions runs as fast as possible thus the kalman filter is especially useful in predicting a distance measurment when new ToF values are not ready. I found that I had to scale my input speed value by 1000 for a better kalman response with from the state space dynamics (this is discussed again at the end).
 - `pid_speed_ToF()` feeds the distance value from the kalman filter into the PID loop which ultimately sends a speed to the motors. Note that the `pid_speed_ToF` function is effectively the same as from Lab 5.
 
 ```c++
@@ -336,7 +340,7 @@ KalmanResult kalman(Matrix<2, 1> mu_in, Matrix<2, 2> sigma_in, Matrix<1, 1> u, M
 
 There was extensive debugging required to implement the Kalman filter onto the robot. I will be showing three test cases in this section to summarize all of the robot integration work and results. 
 
-1. I started by **testing the Kalman filter state dynamics** similar to how the filter was testing in the python simulation. I did this by setting effectively putting zero trust in my ToF data relative to my dynamics model by making $\sigma_3$  an order of 1,000,000 times larger than $\sigma_1$ and $\sigma_2$. This yielded the following graph which proves that the Kalman filter is standalone and independent– it properly follows the system dynamics derived at the begginig of the lab when not fusing the Kalman predicted values with ToF.
+1. I started by **testing the Kalman filter state dynamics** similar to how the kalman dynamics model was tested in the python simulation. I did this by effectively putting zero trust in my ToF data relative to my dynamics model by making $\sigma_3$  an order of 1,000,000 times larger than $\sigma_1$ and $\sigma_2$. This yielded the following graph which proves that the Kalman filter is standalone and independent– it properly follows the system dynamics derived at the beginning of the lab when not fusing the Kalman predicted values with ToF.
 
 <img src="/Fast Robots Media/Lab 7/State Space On Robot.png" alt="Alt text" style="display:block;">
 <figcaption>Kalman Filter Dynamics Test</figcaption>
@@ -349,7 +353,7 @@ There was extensive debugging required to implement the Kalman filter onto the r
 <iframe width="450" height="315" src="https://www.youtube.com/embed/tulK-TgVZ2w"allowfullscreen></iframe>
 <figcaption>Kalman Filter Poportional Control</figcaption>
 
-3. The **PD Control** worked really well. Relative to the proportional control above, you can see that the rise time does slightly increase as the derivative term is helping to slow the car down earlier, but it allows for considerably less overshoot. If I continued to increase the proportional and derivative gains, I might have been able to achieve a similarly quick rise time with the derivative term still reducing overshoot. The robot stopped right about 1 ft away from the wall with little steady state error or overshoot. The relatively large Kd term helped to reduce the overshoot. As in previous labs, an integral term did not seem to be needed. You can see the implementation of a low pass filter to reduce derivative kick and overall noise spikes. From the graph you can see that the Kalman filter follows the ToF data fairly well and, as proved above, is able to make its own predicitions using the state dynamcis which is especially useful when new ToF data isn't ready.
+3. The **PD Control** worked really well. Relative to the proportional control above, you can see that the rise time does slightly increase as the derivative term is helping to slow the car down earlier, but it allows for effectively zero overshoot. If I continued to increase the proportional and derivative gains, I might have been able to achieve a similarly quick rise time with the derivative term still reducing overshoot. The robot stopped right about 1 ft away from the wall with little steady state error; as in previous labs, an integral term did not seem to be needed. You can see the implementation of a low pass filter to reduce derivative kick and overall noise spikes. From the graph you can see that the Kalman filter follows the ToF data fairly well and, as proved above, is able to make its own predicitions using the state dynamcis which is especially useful when new ToF data isn't ready.
 
 
 <img src="/Fast Robots Media/Lab 7/AT .12|0|60|300.png" alt="Alt text" style="display:block;">
@@ -361,13 +365,16 @@ There was extensive debugging required to implement the Kalman filter onto the r
 
 ## Variable Discussion
 
-The effect of adjusting the $\sigma$ values has been discussed in the above graphs. However, I have not directly discussed how the *m*, *d*, and *u* term affect the Kalman prediction.
+Quick recap of variables used to tune and their impacts:
 
-FINISH FINISH FINISH FINISH 
+
+- **m and d**: Although these parameters were derived from experimentally determined variables at the start, they can still be fine-tuned. A higher value of *m* corresponds to a car with greater inertia; it accelerates less in response to a control input. The *d* term mainly influences the max speed of the car (calculated by the Kalman filter) and how rapidly the speed decreases once the control input is removed.
+- **u**: The control input, unlike the m and d terms, come directly from the PID controller and in theory probably should not be changed in order to tune the kalman filter. However, I found that scaling/ampliyfing it (as mentioned earlier in the lab) was a quick and effective workaround to better match the filter’s expected behavior.
+- $\boldsymbol{\sigma}$: As previously mentioned in the lab, $\sigma_1$ and $\sigma_2$ represent the "trust" in the ToF data realitve to the model. For example, large $\sigma_1$ and $\sigma_2$ correspond to low confidence in the model's predictions and make the filter rely more heavily on sensor measurments. $\sigma_3$ is effectively the same but for the model. Large $\sigma_3$ values represent more trust in the model than in the ToF measurments.
 
 ## Collaboration
 
-I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Stephan Wagner's site](https://fast.synthghost.com/) for much of the lab but most specifically for implementing the DMP! ChatGPT was used to help plot graphs.
+I collaborated extensively on this project with [Jack Long](https://jack-d-long.github.io/) and [Trevor Dales](https://trevordales.github.io/). I referenced [Stephan Wagner's site](https://fast.synthghost.com/) with help in implementing the python kalman simulation! ChatGPT was used to help plot graphs.
 
 
 
