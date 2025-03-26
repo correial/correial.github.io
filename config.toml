@@ -17,6 +17,7 @@ taxonomies = [{ name = "tags", feed = true }]
 
 [markdown]
 highlight_code = true
+math = true
 render_html = true
 highlight_theme = "css"
 highlight_themes_css = [
@@ -34,6 +35,7 @@ index_format = "fuse_json"
 
 # default_theme = "dark"
 katex = true
+math = true
 
 favicon = "/favicon.png"
 accent_color = "#ff7800"
