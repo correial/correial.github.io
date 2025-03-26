@@ -345,7 +345,7 @@ There was extensive debugging required to implement the Kalman filter onto the r
 <img src="/Fast Robots Media/Lab 7/State Space On Robot.png" alt="Alt text" style="display:block;">
 <figcaption>Kalman Filter Dynamics Test</figcaption>
 
-2. I implemented **proportional control** and ran the robot at a wall with the target of stopping 300 mm (~1ft) away. With only proportional control, I was unable to avoid hitting the wall unless the robot went extremely slow. Here is a trial where the robot does hit the wall but is able to bounce off and still meet the 1 ft target
+2. I implemented **proportional control** and ran the robot at a wall with the target of stopping 300 mm (~1ft) away. With only proportional control, I was unable to avoid hitting the wall unless the robot went extremely slow. Here is a trial where the robot does hit the wall but is able to bounce off and still meet the 1 ft target. Note that the speed is constant (horizontal) during some of the run due to the speed floor that is implemented. You can also see the speed max in the PD control at the beginning.
 
 <img src="/Fast Robots Media/Lab 7/Kalman P.png" alt="Alt text" style="display:block;">
 <figcaption>Kalman Filter Proportional Control Kp = .1</figcaption>
