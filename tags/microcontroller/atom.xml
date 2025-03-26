@@ -296,7 +296,7 @@ $$&lt;&#x2F;p&gt;
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 7&#x2F;State Space On Robot.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
 &lt;figcaption&gt;Kalman Filter Dynamics Test&lt;&#x2F;figcaption&gt;
 &lt;ol start=&quot;2&quot;&gt;
-&lt;li&gt;I implemented &lt;strong&gt;proportional control&lt;&#x2F;strong&gt; and ran the robot at a wall with the target of stopping 300 mm (~1ft) away. With only proportional control, I was unable to avoid hitting the wall unless the robot went extremely slow. Here is a trial where the robot does hit the wall but is able to bounce off and still meet the 1 ft target. Note that the speed is constant (horizontal) during some of the run due to the speed floor that is implemented. You can also see the speed max in the PD control at the beginning.&lt;&#x2F;li&gt;
+&lt;li&gt;I implemented &lt;strong&gt;proportional control&lt;&#x2F;strong&gt; and ran the robot at a wall with the target of stopping 300 mm (~1ft) away. With only proportional control, I was unable to avoid hitting the wall unless the robot went extremely slow. Here is a trial where the robot does hit the wall but is able to bounce off and still meet the 1 ft target. Note that the speed is constant (horizontal) during some of the run due to the speed floor that is implemented. You can also see the speed ceiling in the PD control at the beginning.&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 7&#x2F;Kalman P.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
 &lt;figcaption&gt;Kalman Filter Proportional Control Kp = .1&lt;&#x2F;figcaption&gt;
