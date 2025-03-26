@@ -143,7 +143,7 @@ Since we are only directly measuring ToF data *X*, the state space which will gi
 
 ## Kalman Python Simulation
 
-### Initialize KF
+### Initialize Python KF
 
 For the initial python simulation, the sampling time used for the Kalman filter was 95 ms, the same as my ToF rate. When I confirmed that the simulation was working, I then sped it up to the rate that my PID code loops runs on my arduino (20 ms). U_ss was calculated via u/step_size, where u = 120 and step size = 255. I estimated my ToF variance (dx = 30mm) by taking the average variance in data when statically measuring distance from the wall.
 
@@ -239,11 +239,9 @@ Again, I felt as though my my Kalman values were tracking too close to my ToF, t
 <img src="/Fast Robots Media/Lab 7/sig3*5.png" alt="Alt text" style="display:block;">
 <figcaption>$\sigma_1$ & $\sigma_2$ = 32.4 | $\sigma_3$ = 170</figcaption>
 
-### Variable Discussion
-
 ## Onboard Robot Kalman Integration
 
-### Initialize KF
+### Initialize Arduino KF
 
 After confirming that the simulation worked as expected, I integrated the code onto my car. The general workflow is as follows:
 
@@ -307,7 +305,7 @@ void runPIDLin() {
 }
 ```
 
-Here is the `kalman()` function
+Here is the `kalman()` function. Note that the inverse and transpose functions had to be swapped out for Arduino alternatives
 
 ```c++
 struct KalmanResult {
@@ -317,14 +315,14 @@ struct KalmanResult {
 
 KalmanResult kalman(Matrix<2, 1> mu_in, Matrix<2, 2> sigma_in, Matrix<1, 1> u, Matrix<1, 1> y, bool update = true) {
   Matrix<2, 1> mu_p = Ad * mu_in + Bd * u;
-  Matrix<2, 2> sigma_p = Ad * (sigma_in * ~Ad) + Sigma_u;
+  Matrix<2, 2> sigma_p = Ad * (sigma_in * ~Ad) + Sigma_u; // ~ used for trasnspose
 
   if (!update) {
     return { mu_p, sigma_p };
   }
 
   Matrix<1, 1> sigma_m = C * sigma_p * ~C + Sigma_z;
-  Matrix<1, 1> sigma_m_inv = { 1 / sigma_m(0) };
+  Matrix<1, 1> sigma_m_inv = { 1 / sigma_m(0) }; // scalar inverse used
   Matrix<2, 1> kkf_gain = sigma_p * ~C * sigma_m_inv;
 
   float y_m = y(0, 0) - (C * mu_p)(0, 0);
@@ -334,7 +332,38 @@ KalmanResult kalman(Matrix<2, 1> mu_in, Matrix<2, 2> sigma_in, Matrix<1, 1> u, M
   return { mu, sigma };
 }
 ```
+### Test Arduino
 
+There was extensive debugging required to implement the Kalman filter onto the robot. I will be showing three test cases in this section to summarize all of the robot integration work and results. 
+
+1. I started by **testing the Kalman filter state dynamics** similar to how the filter was testing in the python simulation. I did this by setting effectively putting zero trust in my ToF data relative to my dynamics model by making $\sigma_3$  an order of 1,000,000 times larger than $\sigma_1$ and $\sigma_2$. This yielded the following graph which proves that the Kalman filter is standalone and independent– it properly follows the system dynamics derived at the begginig of the lab when not fusing the Kalman predicted values with ToF.
+
+<img src="/Fast Robots Media/Lab 7/State Space On Robot.png" alt="Alt text" style="display:block;">
+<figcaption>Kalman Filter Dynamics Test</figcaption>
+
+2. I implemented **proportional control** and ran the robot at a wall with the target of stopping 300 mm (~1ft) away. With only proportional control, I was unable to avoid hitting the wall unless the robot went extremely slow. Here is a trial where the robot does hit the wall but is able to bounce off and still meet the 1 ft target
+
+<img src="/Fast Robots Media/Lab 7/Kalman P.png" alt="Alt text" style="display:block;">
+<figcaption>Kalman Filter Proportional Control Kp = .1</figcaption>
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/tulK-TgVZ2w"allowfullscreen></iframe>
+<figcaption>Kalman Filter Poportional Control</figcaption>
+
+3. The **PD Control** worked really well. Relative to the proportional control above, you can see that the rise time does slightly increase as the derivative term is helping to slow the car down earlier, but it allows for considerably less overshoot. If I continued to increase the proportional and derivative gains, I might have been able to achieve a similarly quick rise time with the derivative term still reducing overshoot. The robot stopped right about 1 ft away from the wall with little steady state error or overshoot. The relatively large Kd term helped to reduce the overshoot. As in previous labs, an integral term did not seem to be needed. You can see the implementation of a low pass filter to reduce derivative kick and overall noise spikes. From the graph you can see that the Kalman filter follows the ToF data fairly well and, as proved above, is able to make its own predicitions using the state dynamcis which is especially useful when new ToF data isn't ready.
+
+
+<img src="/Fast Robots Media/Lab 7/AT .12|0|60|300.png" alt="Alt text" style="display:block;">
+<figcaption>Kalman Filter PD Kp = .12 | Kd = 60</figcaption>
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/HvY___Nhg7A"allowfullscreen></iframe>
+<figcaption>Kalman Filter PD Control</figcaption>
+
+
+## Variable Discussion
+
+The effect of adjusting the $\sigma$ values has been discussed in the above graphs. However, I have not directly discussed how the *m*, *d*, and *u* term affect the Kalman prediction.
+
+FINISH FINISH FINISH FINISH 
 
 ## Collaboration
 
