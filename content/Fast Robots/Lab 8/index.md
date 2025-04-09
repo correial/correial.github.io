@@ -121,12 +121,12 @@ The time elapsed for each stunt trial are in the image captions; the timer start
 
 ### Graphs for Trial 3
 
-From the graph you can see Kalman Filter Position vs. Time as well as Speed vs. Time. Note that the speed flips from 255 to -255 once the robots hits the target distance of 1200 mm. This distance was played around with until finally deciding that 1200 mm was just enough to have the robot flip on the mat (300 mm from the wall) without hitting the wall or flipping too early.
+From the graph you can see Kalman Filter Position vs. Time as well as Speed vs. Time. Note that the speed flips from 255 to -255 once the robots hits the target distance of 1200 mm. This distance was played around with until finally deciding that 1200 mm was just enough to have the robot flip on the mat (300 mm from the wall) without hitting the wall or flipping too early. You can see that the Kalman filter could use some further tuning as the model predicts too slow of a velocity (as seen from the lack of steepness in the bunched up data). Returning to the state space model, this could be improved by reducing m (to increase the B matrix) or increasing U (less intuitive fix).
 
 <img src="/Fast Robots Media/Lab 8/StuntGraph.png" alt="Alt text" style="display:block;">
 <figcaption>Trial 3 Graph</figcaption>
 
-### Blooper Edit and Original Video
+### Blooper Video
 
 Here is my blooper video! ([Here is the original](https://www.youtube.com/shorts/y1TS2CTmxV8) but vote on the edited cars version)
 <iframe width="450" height="315" src="https://www.youtube.com/embed/rXx_Q_o5dlI"allowfullscreen></iframe>
