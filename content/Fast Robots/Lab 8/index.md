@@ -83,7 +83,40 @@ if (!flipNow) {
 ```
 
 - `collectTOF()` responsible for collecting current ToF values and updating the global `TOF1` array with distances
-- `getKalmanData()` reads in the current `TOF1` array value (updated by the collectTOF() function). In return it updates the global `kf` array with the kalman filter calculated distance which is used for tracking distance to the wall for the stunt
+- `getKalmanData()` reads in the current `TOF1` array value (updated by the collectTOF() function). In return it updates the global `kf` array with the kalman filter calculated distance which is used for tracking distance to the wall for the stunt. In the below code, you can see the use of an update flag that flips based on whether new sensor data is ready– this helps to speed up the process. The following A and B matrices were used post tuning: 
+
+<div id="math-A"></div>
+<div id="math-B"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Matrix A (tight rows)
+    katex.render(String.raw`
+      A = \begin{bmatrix}
+        0 & 1 \\[-0.0em]
+        0 & -\frac{d}{m}
+      \end{bmatrix}
+      = 
+      \begin{bmatrix}
+        0 & 1 \\[-0.0em]
+        0 & -4.07
+      \end{bmatrix}
+    `, document.getElementById("math-A"), { displayMode: true });
+
+    // Matrix B (tight rows)
+    katex.render(String.raw`
+      B = \begin{bmatrix}
+        0 \\[-0.0em]
+        \frac{1}{m}
+      \end{bmatrix}
+      = 
+      \begin{bmatrix}
+        0 \\[-0.0em]
+        10
+      \end{bmatrix}
+    `, document.getElementById("math-B"), { displayMode: true });
+  });
+</script>
 
 ```c++
 if (update) {
@@ -121,7 +154,7 @@ The time elapsed for each stunt trial are in the image captions; the timer start
 
 ### Graphs for Trial 3
 
-From the graph you can see Kalman Filter Position vs. Time as well as Speed vs. Time. Note that the speed flips from 255 to -255 once the robots hits the target distance of 1200 mm. This distance was played around with until finally deciding that 1200 mm was just enough to have the robot flip on the mat (300 mm from the wall) without hitting the wall or flipping too early. You can see that the Kalman filter could use some further tuning as the model predicts too slow of a velocity (as seen from the lack of steepness in the bunched up data). Returning to the state space model, this could be improved by reducing m (to increase the B matrix) or increasing U (less intuitive fix).
+From the graph you can see Kalman Filter Position vs. Time as well as Speed vs. Time. Note that the speed flips from 255 to -255 once the robots hits the target distance of 1200 mm. This distance was played around with until finally deciding that 1200 mm was just enough to have the robot flip on the mat (300 mm from the wall) without hitting the wall or flipping too early. You can see that the Kalman filter could use some further tuning as the model predicts too slow of a velocity (as seen from the lack of steepness in the bunched up data). Returning to the state space model, this could be improved by reducing m (to increase the B matrix) or increasing U (less intuitive fix). ToF sensor data is visible from the KF jumps but aren't shown to reduce graph clutter.
 
 <img src="/Fast Robots Media/Lab 8/StuntGraph.png" alt="Alt text" style="display:block;">
 <figcaption>Trial 3 Graph</figcaption>
@@ -139,7 +172,7 @@ Here is my blooper video! ([Here is the original](https://www.youtube.com/shorts
 <img src="/Fast Robots Media/Lab 8/car.png" alt="Alt text" style="display:block;">
 <figcaption>Robot with (right) and without (left) weight</figcaption>
 
-2. Throughout the hours of testing, I had to use correction factors to straighted the car's trajectory toward the mat and also help to slow the wheels down at the same time, ensuring that when flipped, the robot was oriented straight. My correction terms scale the passed in PWM speed. When driving at the wall, a correction term of 0.95 scales the right side motor and when driving in reverse (slowing down) a correction factor of 0.90 scales the left side motor. The blooper is an example of the robot before tuning. You can see it arc left when approaching the wall and then spinning as it slowed down which made it ultimately return at the completely wrong angle.
+2. Throughout the hours of testing, I had to use **correction factors** to straighted the car's trajectory toward the mat and also help to slow the wheels down at the same time, ensuring that when flipped, the robot was oriented straight. My correction terms scale the passed in PWM speed. When driving at the wall, a correction term of 0.95 scales the right side motor and when driving in reverse (slowing down) a correction factor of 0.90 scales the left side motor. The blooper is an example of the robot before tuning. You can see it arc left when approaching the wall and then spinning as it slowed down which made it ultimately return at the completely wrong angle.
 
 ## Collaboration
 
