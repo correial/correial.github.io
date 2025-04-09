@@ -25,9 +25,8 @@
         <content type="html" xml:base="https://correial.github.io/Fast Robots/lab-8/">&lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 8&#x2F;FRCars.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
 &lt;figcaption&gt;Cars 3 Way Tie&lt;&#x2F;figcaption&gt;
 &lt;h2 id=&quot;flip-implementation&quot;&gt;Flip Implementation&lt;&#x2F;h2&gt;
-&lt;p&gt;The flip code was implemented&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;bluetooth-data-transmission&quot;&gt;Bluetooth Data Transmission&lt;&#x2F;h3&gt;
-&lt;p&gt;The entire flip program runs when called over bluetooth via the Jupyter notebook line: &lt;code&gt;ble.send_command(CMD.STUNT, &quot;1200&quot;)&lt;&#x2F;code&gt;. The parameter passed in is the distance away from the wall that the car should begin to reverse at. Note that 1200 mm is larger than the distance away from the wall of the mat (300 mm) as the car needs time to slow down before ultimately flipping on the mat. This parameter allows for easy flip tuning for various different starting positions and flip locations.&lt;&#x2F;p&gt;
+&lt;p&gt;The entire flip program starts when called over bluetooth via the Jupyter notebook line: &lt;code&gt;ble.send_command(CMD.STUNT, &quot;1200&quot;)&lt;&#x2F;code&gt;. The parameter passed in is the distance away from the wall that the car should begin to reverse at. Note that 1200 mm is larger than the distance away from the wall of the mat (300 mm) as the car needs time to slow down before ultimately flipping on the mat. This parameter allows for easy flip tuning for various different starting positions and flip locations.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;arduino-code&quot;&gt;Arduino Code&lt;&#x2F;h3&gt;
 &lt;p&gt;The &lt;code&gt;STUNT&lt;&#x2F;code&gt; command is responsible for ensuring the first kalman filter value is stored and  calling the essential &lt;code&gt;Flip()&lt;&#x2F;code&gt; and &lt;code&gt;sendStuntData()&lt;&#x2F;code&gt; functions. Here is the command:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;c++&quot; class=&quot;language-c++ z-code&quot;&gt;&lt;code class=&quot;language-c++&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;z-source z-c++&quot;&gt;stuntStartTime &lt;span class=&quot;z-keyword z-operator z-assignment z-c&quot;&gt;=&lt;&#x2F;span&gt; &lt;span class=&quot;z-meta z-function-call z-c++&quot;&gt;&lt;span class=&quot;z-variable z-function z-c++&quot;&gt;millis&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-group z-c++&quot;&gt;&lt;span class=&quot;z-punctuation z-section z-group z-begin z-c++&quot;&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-c++&quot;&gt;&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-c++&quot;&gt;&lt;span class=&quot;z-meta z-group z-c++&quot;&gt;&lt;span class=&quot;z-punctuation z-section z-group z-end z-c++&quot;&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-terminator z-c++&quot;&gt;;&lt;&#x2F;span&gt;
@@ -125,9 +124,18 @@
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 8&#x2F;StuntGraph.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
 &lt;figcaption&gt;Trial 3 Graph&lt;&#x2F;figcaption&gt;
 &lt;h3 id=&quot;blooper-edit-and-original-video&quot;&gt;Blooper Edit and Original Video&lt;&#x2F;h3&gt;
-&lt;p&gt;Here is my blooper video!&lt;&#x2F;p&gt;
+&lt;p&gt;Here is my blooper video! (&lt;a href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;shorts&#x2F;y1TS2CTmxV8&quot;&gt;Here is the original&lt;&#x2F;a&gt; but vote on the edited cars version)&lt;&#x2F;p&gt;
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;rXx_Q_o5dlI&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
 &lt;figcaption&gt;Blooper&lt;&#x2F;figcaption&gt;
+&lt;h2 id=&quot;summary-and-challenges&quot;&gt;Summary and Challenges&lt;&#x2F;h2&gt;
+&lt;ol&gt;
+&lt;li&gt;You can see that in two of the trials, an &lt;strong&gt;added weight&lt;&#x2F;strong&gt; is mounted to the front of the robot to help it nosedive and flip about its front. By the end I realized that the added mass did not help as much as a fully charged battery thus you can see that the trials with the added weight (1 and 2) are nearly identical to those without. The weight was made out of taped together washers and was shared between Trevor and I.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 8&#x2F;car.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
+&lt;figcaption&gt;Robot with (right) and without (left) weight&lt;&#x2F;figcaption&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;Throughout the hours of testing, I had to use correction factors to straighted the car’s trajectory toward the mat and also help to slow the wheels down at the same time, ensuring that when flipped, the robot was oriented straight. My correction terms scale the passed in PWM speed. When driving at the wall, a correction term of 0.95 scales the right side motor and when driving in reverse (slowing down) a correction factor of 0.90 scales the left side motor. The blooper is an example of the robot before tuning. You can see it arc left when approaching the wall and then spinning as it slowed down which made it ultimately return at the completely wrong angle.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
 &lt;h2 id=&quot;collaboration&quot;&gt;Collaboration&lt;&#x2F;h2&gt;
 &lt;p&gt;I collaborated extensively on this project with &lt;a href=&quot;https:&#x2F;&#x2F;jack-d-long.github.io&#x2F;&quot;&gt;Jack Long&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;trevordales.github.io&#x2F;&quot;&gt;Trevor Dales&lt;&#x2F;a&gt;. ChatGPT was used to help plot graphs.&lt;&#x2F;p&gt;
 </content>
