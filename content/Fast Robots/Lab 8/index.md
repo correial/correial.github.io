@@ -11,11 +11,9 @@ tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontr
 
 ## Flip Implementation
 
-The flip code was implemented 
-
 ### Bluetooth Data Transmission
 
-The entire flip program runs when called over bluetooth via the Jupyter notebook line: `ble.send_command(CMD.STUNT, "1200")`. The parameter passed in is the distance away from the wall that the car should begin to reverse at. Note that 1200 mm is larger than the distance away from the wall of the mat (300 mm) as the car needs time to slow down before ultimately flipping on the mat. This parameter allows for easy flip tuning for various different starting positions and flip locations.
+The entire flip program starts when called over bluetooth via the Jupyter notebook line: `ble.send_command(CMD.STUNT, "1200")`. The parameter passed in is the distance away from the wall that the car should begin to reverse at. Note that 1200 mm is larger than the distance away from the wall of the mat (300 mm) as the car needs time to slow down before ultimately flipping on the mat. This parameter allows for easy flip tuning for various different starting positions and flip locations.
 
 ### Arduino Code
 The `STUNT` command is responsible for ensuring the first kalman filter value is stored and  calling the essential `Flip()` and `sendStuntData()` functions. Here is the command:
@@ -128,9 +126,18 @@ From the graph you can see Kalman Filter Position vs. Time as well as Speed vs. 
 
 ### Blooper Edit and Original Video
 
-Here is my blooper video!
+Here is my blooper video! ([Here is the original](https://www.youtube.com/shorts/y1TS2CTmxV8) but vote on the edited cars version)
 <iframe width="450" height="315" src="https://www.youtube.com/embed/rXx_Q_o5dlI"allowfullscreen></iframe>
 <figcaption>Blooper</figcaption>
+
+## Summary and Challenges
+
+1. You can see that in two of the trials, an **added weight** is mounted to the front of the robot to help it nosedive and flip about its front. By the end I realized that the added mass did not help as much as a fully charged battery thus you can see that the trials with the added weight (1 and 2) are nearly identical to those without. The weight was made out of taped together washers and was shared between Trevor and I.
+
+<img src="/Fast Robots Media/Lab 8/car.png" alt="Alt text" style="display:block;">
+<figcaption>Robot with (right) and without (left) weight</figcaption>
+
+2. Throughout the hours of testing, I had to use correction factors to straighted the car's trajectory toward the mat and also help to slow the wheels down at the same time, ensuring that when flipped, the robot was oriented straight. My correction terms scale the passed in PWM speed. When driving at the wall, a correction term of 0.95 scales the right side motor and when driving in reverse (slowing down) a correction factor of 0.90 scales the left side motor. The blooper is an example of the robot before tuning. You can see it arc left when approaching the wall and then spinning as it slowed down which made it ultimately return at the completely wrong angle.
 
 ## Collaboration
 
