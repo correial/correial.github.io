@@ -105,12 +105,13 @@
 &lt;&#x2F;ul&gt;
 &lt;h2 id=&quot;results&quot;&gt;Results&lt;&#x2F;h2&gt;
 &lt;h3 id=&quot;stunt-videos&quot;&gt;Stunt Videos&lt;&#x2F;h3&gt;
+&lt;p&gt;The time elapsed for each stunt trial are in the image captions; the timer starts once the car passes the blue line and ends once it retuns and crosses it.&lt;&#x2F;p&gt;
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;nGscvDKEgaM&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
-&lt;figcaption&gt;Flip Trial 1&lt;&#x2F;figcaption&gt;
+&lt;figcaption&gt;Flip Trial 1 | Time: 2.38s&lt;&#x2F;figcaption&gt;
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;f26MszdWCjk&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
-&lt;figcaption&gt;Flip Trial 2&lt;&#x2F;figcaption&gt;
+&lt;figcaption&gt;Flip Trial 2 | Time: 2.36s&lt;&#x2F;figcaption&gt;
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;3NoplLiZmkU&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
-&lt;figcaption&gt;Flip Trial 3&lt;&#x2F;figcaption&gt;
+&lt;figcaption&gt;Flip Trial 3 | Time: 2.30s&lt;&#x2F;figcaption&gt;
 &lt;h3 id=&quot;graphs-for-trial-3&quot;&gt;Graphs for Trial 3&lt;&#x2F;h3&gt;
 &lt;p&gt;From the graph you can see Kalman Filter Position vs. Time as well as Speed vs. Time. Note that the speed flips from 255 to -255 once the robots hits the target distance of 1200 mm. This distance was played around with until finally deciding that 1200 mm was just enough to have the robot flip on the mat (300 mm from the wall) without hitting the wall or flipping too early.&lt;&#x2F;p&gt;
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 8&#x2F;StuntGraph.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
