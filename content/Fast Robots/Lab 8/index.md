@@ -108,14 +108,16 @@ if (update) {
 
 ### Stunt Videos 
 
+The time elapsed for each stunt trial are in the image captions; the timer starts once the car passes the blue line and ends once it retuns and crosses it.
+
 <iframe width="450" height="315" src="https://www.youtube.com/embed/nGscvDKEgaM"allowfullscreen></iframe>
-<figcaption>Flip Trial 1</figcaption>
+<figcaption>Flip Trial 1 | Time: 2.38s</figcaption>
 
 <iframe width="450" height="315" src="https://www.youtube.com/embed/f26MszdWCjk"allowfullscreen></iframe>
-<figcaption>Flip Trial 2</figcaption>
+<figcaption>Flip Trial 2 | Time: 2.36s</figcaption>
 
 <iframe width="450" height="315" src="https://www.youtube.com/embed/3NoplLiZmkU"allowfullscreen></iframe>
-<figcaption>Flip Trial 3</figcaption>
+<figcaption>Flip Trial 3 | Time: 2.30s</figcaption>
 
 ### Graphs for Trial 3
 
