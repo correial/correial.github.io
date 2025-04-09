@@ -113,10 +113,10 @@
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;3NoplLiZmkU&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
 &lt;figcaption&gt;Flip Trial 3 | Time: 2.30s&lt;&#x2F;figcaption&gt;
 &lt;h3 id=&quot;graphs-for-trial-3&quot;&gt;Graphs for Trial 3&lt;&#x2F;h3&gt;
-&lt;p&gt;From the graph you can see Kalman Filter Position vs. Time as well as Speed vs. Time. Note that the speed flips from 255 to -255 once the robots hits the target distance of 1200 mm. This distance was played around with until finally deciding that 1200 mm was just enough to have the robot flip on the mat (300 mm from the wall) without hitting the wall or flipping too early.&lt;&#x2F;p&gt;
+&lt;p&gt;From the graph you can see Kalman Filter Position vs. Time as well as Speed vs. Time. Note that the speed flips from 255 to -255 once the robots hits the target distance of 1200 mm. This distance was played around with until finally deciding that 1200 mm was just enough to have the robot flip on the mat (300 mm from the wall) without hitting the wall or flipping too early. You can see that the Kalman filter could use some further tuning as the model predicts too slow of a velocity (as seen from the lack of steepness in the bunched up data). Returning to the state space model, this could be improved by reducing m (to increase the B matrix) or increasing U (less intuitive fix).&lt;&#x2F;p&gt;
 &lt;img src=&quot;&#x2F;Fast Robots Media&#x2F;Lab 8&#x2F;StuntGraph.png&quot; alt=&quot;Alt text&quot; style=&quot;display:block;&quot;&gt;
 &lt;figcaption&gt;Trial 3 Graph&lt;&#x2F;figcaption&gt;
-&lt;h3 id=&quot;blooper-edit-and-original-video&quot;&gt;Blooper Edit and Original Video&lt;&#x2F;h3&gt;
+&lt;h3 id=&quot;blooper-video&quot;&gt;Blooper Video&lt;&#x2F;h3&gt;
 &lt;p&gt;Here is my blooper video! (&lt;a href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;shorts&#x2F;y1TS2CTmxV8&quot;&gt;Here is the original&lt;&#x2F;a&gt; but vote on the edited cars version)&lt;&#x2F;p&gt;
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;rXx_Q_o5dlI&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
 &lt;figcaption&gt;Blooper&lt;&#x2F;figcaption&gt;
