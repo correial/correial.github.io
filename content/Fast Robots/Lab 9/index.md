@@ -10,7 +10,7 @@ tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontr
 **Orientation control** via the IMU's DMP to set target angles for the robot over the course of data collection. With success and high accuracy using the DMP in Lab 6, I figured that this was the best approach to ensure that the robot was reliably turning a set number of degrees throughout its rotation. 
 
 ### BLE and Data Transmission
-The `SPIN` case was used handle initiating and running the turning logic. The case was called over bluetooth via the command: `ble.send_command(CMD.SPIN, "4.6|0|0")`. The parameters are used to pass through PID gains for more efficient tuning and are ordered as follows (Kp|Ki|Kd). I found that with the small changes in target angles and the goal of moving fairly slow that only proportional control was needed to reliably come within a degree or two of the target. At the slow speeds there was very minial, if any, overshoot thus a derivative term was not needed. 
+The `SPIN` case was used handle initiating and running the turning logic. The case was called over bluetooth via the command: `ble.send_command(CMD.SPIN, "4.6|0|0")`. The parameters are used to pass through PID gains for more efficient tuning and are ordered as follows (Kp|Ki|Kd). I found that with the small changes in target angles and the goal of moving fairly slow that only proportional control was needed to reliably come within a degree or two of the target. At the slow speeds there was very minial, if any, overshoot thus a derivative term was not needed. A notification handler is used to recieve the data and help pipe it into CSV files.
 
 ### Arduino Implementation
 
@@ -75,7 +75,7 @@ Note you can see that for roughly two thirds of rotations, there was no overshoo
 ## Mapping Data and Post Processing
 
 ### Data at Global Coordinates
-For all runs the robot was started at zero degrees facing the same way as shown in the video(O)()()()()
+For all runs the robot was started at zero degrees facing the same way as shown in the above video
 
 <img src="/Fast Robots Media/Lab 9/MapPoints.png" alt="Alt text" style="display:block;">
 <figcaption>Mapping Scans</figcaption>
@@ -123,9 +123,28 @@ Next, a transformation is needed to convert the robot's local angular yaw coordi
   });
 </script>
 
-### Final Map
+## Map
 
 After the transformations are applied to the raw ToF and DMP data, the following map is created
+
+<img src="/Fast Robots Media/Lab 9/OGMap.png" alt="Alt text" style="display:block;">
+<figcaption>ToF Arena Map</figcaption>
+
+The blue arc in the middle of the arena likely indicates that a new ToF reading was not recieved for a few degrees of rotation, essentially creating part of a circle as the same ToF value is being plotted for a small sweep of angles.
+
+### Line-Based Map Conversion
+
+
+<img src="/Fast Robots Media/Lab 9/MapwLines.png" alt="Alt text" style="display:block;">
+<figcaption>ToF Arena Map with Estimated Lines and True Map</figcaption>
+
+
+```python
+starts = [(-5.09, -4.43), (-5.09, -4.43), (-0.45, -4.2), (-0.33, -2.30), (0.98, -2.30), (1.15, -4.27), (6.56, -4.10), (6.40, 4.5), (-2.13, 4.5), (-2.13, 0.33), (2.45, 1.64), (4.7, 1.64),(4.7, -0.75), (2.45, -0.75)]
+
+ends = [(-5.09, 0.33), (-0.45, -4.2), (-0.45, -2.30), (0.98, -2.30),(1.15, -4.27), (6.56, -4.10), (6.40, 4.5), (-2.13, 4.5), (-2.13, 0.33), (-5.09, 0.33), (4.7, 1.64), (4.7, -0.75), (2.45, -0.75), (2.45, 1.64)]
+
+```
 
 ## Collaboration
 
