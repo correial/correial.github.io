@@ -7,14 +7,14 @@ tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontr
 +++
 
 ## Orientation Control Implementation
-**Orientation control** via the IMU's DMP to set target angles for the robot over the course of data collection. With success and high accuracy using the DMP in Lab 6, I figured that this was the best approach to ensure that the robot was reliably turning a set number of degrees throughout its rotation. 
+Orientation control via the IMU's DMP library was used to set target angles for ToF data collection. With success and high accuracy using the DMP in Lab 6, I figured that this was the best approach to ensure that the robot was reliably turning a set number of degrees throughout its rotation. 
 
 ### BLE and Data Transmission
-The `SPIN` case was used handle initiating and running the turning logic. The case was called over bluetooth via the command: `ble.send_command(CMD.SPIN, "4.6|0|0")`. The parameters are used to pass through PID gains for more efficient tuning and are ordered as follows (Kp|Ki|Kd). I found that with the small changes in target angles and the goal of moving fairly slow that only proportional control was needed to reliably come within a degree or two of the target. At the slow speeds there was very minial, if any, overshoot thus a derivative term was not needed. A notification handler is used to recieve the data and help pipe it into CSV files.
+The `SPIN` case was used handle initiating and running the turning logic. The case was called over bluetooth via the command: `ble.send_command(CMD.SPIN, "4.6|0|0")`. The parameters are used to pass through PID gains for more efficient tuning and are ordered as follows (Kp|Ki|Kd). I found that with the small changes in target angles and the goal of moving fairly slow, that only proportional control was needed to reliably come within a degree or two of the target. At the slow speeds, there was minimal, if any, overshoot thus a derivative term was not needed. A notification handler is used to recieve the data and help pipe it into CSV files as used in previous labs.
 
 ### Arduino Implementation
 
-The `SPIN` code is shown below. The robot spins a full 360 degrees over the course of 30 rotations and pauses (12 degress between each rotaion). The next target angle (adding 12 to `target_turn`) is set every 2 seconds to allow for ample data collection time at a fixed angle for maximum ToF accuracy. Note that I have have ToF sensors collecting data at all time to increase the number of data points. While this does come at the cost of decreased accuracy while rotating between each two second break, it did not seem to greatly impact the ToF readings and the increased resultion was well worth the slightly decreased accuracy at a few points.
+The `SPIN` code is shown below. The robot spins a full 360 degrees over the course of **30 rotations** and pauses (**12 degress between each rotaion**). The next target angle (adding 12 to `target_turn`) is set every two seconds to allow for ample data collection time at a fixed angle for maximum ToF accuracy. Note that I have have ToF sensors collecting data at all time to increase the number of data points. While this does come at the cost of decreased accuracy while rotating between each two second break, it did not seem to greatly impact the ToF readings and the increased resultion was well worth the slightly decreased accuracy at a few points.
 
 ```c++
 distanceSensor1.startRanging();
@@ -48,9 +48,9 @@ break;
 
 There are a few important functions to note, many of which have been used in my previous labs:
 - `getDMP()` is responsible for updating the global yaw array with the current angle reading
-- `runPIDRot()` (shown below) is responsible for handling all rotational PID logic–it passes in the gains, target, and current angle into the `pid_turn_Gyro()` function which is explained in detail in Lab 6
 - `collectTOF()` updates the global ToF arrays with the current ToF readings regardless if whether a new one is ready
 - `sendPIDTURNData()` is responsible for sending over all relevant arrays over BLE
+- `runPIDRot()` (*shown below*) is responsible for handling all rotational PID logic–it passes in the gains, target, and current angle into the `pid_turn_Gyro()` function which is explained in detail in Lab 6
 
 ```c++
 timesROT[counter_turn] = millis() - start_time_pid_turn;
@@ -67,15 +67,20 @@ timesROT[counter_turn] = millis() - start_time_pid_turn;
 
 ### Data for Target Setting
 
-Note you can see that for roughly two thirds of rotations, there was no overshoot as a reverse correction input was not needed. For instances of small overshoots, they were quickly corrected as seen from a spike in speed in the opposite direction. If I wanted to completely eliminate these overshoots, it would make the rotations much slower which could cause a memoery issue. The 12 degree timing every two seconds comes close to maxing out the dynamic memory on the Artemis. 
+Note you can see that for roughly 2/3 of rotations, there was no overshoot as a reverse correction input was not needed (seen on the below graph). For instances of small overshoots, they were quickly corrected as seen from a spike in speed in the opposite direction. If I wanted to completely eliminate these overshoots, it would make the rotations much slower which would result a memory overflow issue. The 12 degree timing every two seconds comes very close to maxing out the dynamic memory on the Artemis. 
 
 <img src="/Fast Robots Media/Lab 9/RotPIDControl.png" alt="Alt text" style="display:block;">
 <figcaption>Rotational PID and Target Setting</figcaption>
 
 ## Mapping Data and Post Processing
 
-### Data at Global Coordinates
-For all runs the robot was started at zero degrees facing the same way as shown in the above video
+### 360 Scan at Global Coordinates
+For all runs the robot was started at zero degrees facing the same way as shown in the video. The video shows a full ToF sweep taken at the coordinate (0,3)
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/HBY2xBkobXg"allowfullscreen></iframe>
+<figcaption>360° Data Collection Scan</figcaption>
+
+The data at each coordinate was then graphed on a polar plot for an initial sanity check 
 
 <img src="/Fast Robots Media/Lab 9/MapPoints.png" alt="Alt text" style="display:block;">
 <figcaption>Mapping Scans</figcaption>
@@ -85,7 +90,7 @@ For all runs the robot was started at zero degrees facing the same way as shown 
 <img src="/Fast Robots Media/Lab 9/Coordinates.png" alt="Alt text" height=350 style="display:block;">
 <figcaption>Robot Coordinate System</figcaption>
 
-A few transformations had to be done to convert the raw ToF data into the global arena coordinate system. I first started by taking into account the front ToF sensor location relative to the robot's center via the robot's coordinate axis (shown above). I found that the ToF sensor ("TOF" in the matrix) is positioned 70 mm $\hat{x}$, 0 mm $\hat{y}$ from the robots center.
+A few transformations were used to convert the raw ToF data into the global arena coordinate system. I first started by taking into account the front ToF sensor location relative to the robot's center via the robot's coordinate axis (shown above). I found that the ToF sensor ("TOF" in the matrix) is positioned 70 mm $\hat{x}$, 0 mm $\hat{y}$ from the robots center.
 
 The following position vector is yielded
 
@@ -123,7 +128,7 @@ Next, a transformation is needed to convert the robot's local angular yaw coordi
   });
 </script>
 
-## Map
+### Map
 
 After the transformations are applied to the raw ToF and DMP data, the following map is created
 
@@ -134,17 +139,38 @@ The blue arc in the middle of the arena likely indicates that a new ToF reading 
 
 ### Line-Based Map Conversion
 
+I estimated the arena walls from the ToF map and overlayed it onto the graph. note that some of the estimated walls appear slanted. This may be the result of a block being slightly angled at the time of data collection. The dotted black line represents the estimated arena from the ToF values
 
-<img src="/Fast Robots Media/Lab 9/MapwLines.png" alt="Alt text" style="display:block;">
+<img src="/Fast Robots Media/Lab 9/MapwEstimates.png" alt="Alt text" style="display:block;">
 <figcaption>ToF Arena Map with Estimated Lines and True Map</figcaption>
 
+The following start and end arrays were used to create the *estimated* arena map (dotted black line above)
 
 ```python
 starts = [(-5.09, -4.43), (-5.09, -4.43), (-0.45, -4.2), (-0.33, -2.30), (0.98, -2.30), (1.15, -4.27), (6.56, -4.10), (6.40, 4.5), (-2.13, 4.5), (-2.13, 0.33), (2.45, 1.64), (4.7, 1.64),(4.7, -0.75), (2.45, -0.75)]
 
 ends = [(-5.09, 0.33), (-0.45, -4.2), (-0.45, -2.30), (0.98, -2.30),(1.15, -4.27), (6.56, -4.10), (6.40, 4.5), (-2.13, 4.5), (-2.13, 0.33), (-5.09, 0.33), (4.7, 1.64), (4.7, -0.75), (2.45, -0.75), (2.45, 1.64)]
-
 ```
+
+<!-- Optional heading (use <div> instead of <p> to eliminate added top margin) -->
+<div style="margin-bottom: 10px;">I also added the true map of the arena (in purple) knowing that every tile is 1ft x 1ft</div>
+
+<!-- Image row -->
+<div style="display: flex; justify-content: center; gap: 20px; align-items: flex-start; margin-top: 0; padding-top: 0;">
+
+  <figure style="text-align: center; margin: 0;">
+    <img src="/Fast Robots Media/Lab 9/MapwLines.png" alt="ToF Arena Map 1" style="height: 300px; width: auto;">
+    <figcaption style="margin-top: 5px;">ToF Arena Map with Estimated Lines and True Map</figcaption>
+  </figure>
+
+  <figure style="text-align: center; margin: 0;">
+    <img src="/Fast Robots Media/Lab 9/MapIRL.jpeg" alt="ToF Arena Map 2" style="height: 300px; width: auto;">
+    <figcaption style="margin-top: 5px;">ToF Arena Map with Estimated Lines and True Map</figcaption>
+  </figure>
+
+</div>
+
+
 
 ## Collaboration
 
