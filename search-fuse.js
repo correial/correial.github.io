@@ -78,8 +78,10 @@
 
 		function makeTeaser(result, searchVal) {
 			const TEASER_SIZE = 20;
-			let relativePath = result.item.url.startsWith("/") ? result.item.url : "/" + result.item.url;
-			let fullUrl = "https://correial.github.io" + relativePath;
+			let fullUrl = result.item.url.startsWith("http")
+				? result.item.url
+				: "https://correial.github.io" + (result.item.url.startsWith("/") ? result.item.url : "/" + result.item.url);
+
 			let output = `<div class="search-result item"><a class="result-title" href="${fullUrl}">${result.item.title}</a>`;
 
 			for (const match of result.matches) {
