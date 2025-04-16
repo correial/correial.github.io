@@ -14,7 +14,7 @@ The `SPIN` case handled initiating and running the turning logic as well as send
 
 ### Arduino Implementation
 
-The `SPIN` code is shown below. The robot spins a full 360 degrees; this is broken up into 12 degrees per movement every two seconds for a total of  **30 rotations**. The next target angle (adding 12 to `target_turn`) is set every two seconds to allow for ample data collection time at a fixed angle for maximum ToF accuracy. Note that I have have ToF sensors collecting data at all times to increase the number of data points. While this does come at the cost of decreased accuracy while rotating between each two second break, it did not seem to greatly impact the ToF readings and the increased resultion was well worth the slightly decreased accuracy at a few points.
+The `SPIN` code is shown below. The robot spins a full 360 degrees; this is broken up into 12 degrees per movement every two seconds for a total of  **30 rotations**. The next target angle (adding 12 to `target_turn`) is set every two seconds to allow for ample data collection time at a fixed angle for maximum ToF accuracy. Note that I have have ToF sensors collecting data at all times to increase the number of data points. While this does come at the cost of decreased accuracy while rotating between each two second break, it did not seem to greatly impact the ToF readings and the increased resultion was well worth the slightly decreased accuracy at a few points. Roughly 2780 ToF readings were collected per full rotation (not all necessarily unique).
 
 ```c++
 distanceSensor1.startRanging();
@@ -64,6 +64,17 @@ timesROT[counter_turn] = millis() - start_time_pid_turn;
 
   counter_turn = counter_turn + 1;
 ```
+
+### On-Axis Rotation
+
+### Drift Error
+
+
+
+I set up a 1ft by 1ft square with a ruler in frame to test the drift of the robot over the course of the 360 degree scan. From the video you can see that the drift throughout mapping was roughly three inches likely due to wheel slip, ground friction despite wheel tape, and an inbalance of motor power. In a 4×4 meter room, this drift would not accumulate fully in one direction, but rather we can asume that it averages out across the scan point. As a result, the expected average positional error in the final map would be roughly **1.5 inches (3.8 cm)**. This results in a worst-case error under 1%, which is acceptable for an empty 4×4 m room. While I tried to use correction terms to reduce the drift, I was not able to completely mitigate it.
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/R_70C47RUNE"allowfullscreen></iframe>
+<figcaption>360° On-Axis Test</figcaption>
 
 ### Data for Target Setting
 
