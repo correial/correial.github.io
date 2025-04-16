@@ -65,11 +65,9 @@ timesROT[counter_turn] = millis() - start_time_pid_turn;
   counter_turn = counter_turn + 1;
 ```
 
-### On-Axis Rotation
+## On-Axis Rotation Testing
 
 ### Drift Error
-
-
 
 I set up a 1ft by 1ft square with a ruler in frame to test the drift of the robot over the course of the 360 degree scan. From the video you can see that the drift throughout mapping was roughly three inches likely due to wheel slip, ground friction despite wheel tape, and an inbalance of motor power. In a 4×4 meter room, this drift would not accumulate fully in one direction, but rather we can asume that it averages out across the scan point. As a result, the expected average positional error in the final map would be roughly **1.5 inches (3.8 cm)**. This results in a worst-case error under 1%, which is acceptable for an empty 4×4 m room. While I tried to use correction terms to reduce the drift, I was not able to completely mitigate it.
 
