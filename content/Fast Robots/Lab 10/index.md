@@ -8,13 +8,13 @@ tags = ["Robotics", "C++", "Sensors", "Python", "Embedded Software", "Microcontr
 
 ## Introduction 
 
-Our robot lack absolute or "ground truth" knowledge of its position. As a result, it must infer its location using information from the environment (ToF sensors)—a process known as localization, which is most effective when approached probabilistically. To implement probabilistic localization, we use a Bayes filter, which maintains a "belief" about the robot's position. Based on its initial state as well as ToF sensor data and control inputs, the robot forms an estimate of where it might be. As new sensor readings and inputs are received, the robot continuously updates this belief using Bayesian inference.
+Our robot lack absolute or "ground truth" knowledge of its position. As a result, it must infer its location using information from the environment (ToF sensors)—a process known as localization, which is most effective when approached probabilistically. To implement probabilistic localization, we use a Bayes filter, which maintains a "belief" about the robot's position. Based on its initial state as well as ToF sensor data and control inputs, the robot forms an estimate of where it might be. As new sensor readings and inputs are received, the robot continuously updates this belief using Bayesian inference. This lab aims to implement Bayes Filter via simulation before implementing on the robot.
 
 The robot state is 3 dimensional and is given by (*x, y*, $ \theta $). The robot’s world is a continuous space that spans with dimensions:
 
-- -5.5 < x < 6.5 feet in the x direction
-- -4.5 < x < 4.5 feet in the y direction
-- -180, +180 degrees along the theta axis
+- -5.5 ft < x < 6.5 ft in the x direction
+- -4.5 ft < x < 4.5 ft in the y direction
+- -180°, +180° along the theta axis
 
 The robot's environment is represented by a grid with cells measuring 0.3048 m x 0.3048 m x 20° for a total number of cells along each axis being (12,9,18). Each cell stores the probability of the robot being in that position, with all probabilities summing to 1 to represent the robot's belief. The Bayes filter updates these probabilities over time, and the cell with the highest probability at each step indicates the robot's most likely pose, forming its estimated trajectory.
 
@@ -51,7 +51,7 @@ The prediction model can be broken down into two main parts:
 
 ### Odometry Motion Model
 
-For our purpose, control input u is expressed via an Odometry Motion model which describes the difference between two positions or "poses". This difference is composed of three parameters: an initial rotation, a translation, and a final rotation.
+For our purpose, control input u is expressed via an Odometry Motion Model which describes the difference between two positions or "poses". This difference is composed of three parameters: an initial rotation, a translation, and a final rotation.
 
 ## Algorithm Implementation
 
@@ -64,7 +64,7 @@ The `compute_control()` function takes two paramenters: current pose and a previ
 <img src="/Fast Robots Media/Lab 10/rotTrans.png" alt="Alt text" height = 300 style="display:block;">
 <figcaption>Odometry Model Parameters</figcaption>
 
-Below are the equations and codeused to calculate and return the rotations and translation
+Below are the equations and code used to calculate and return the rotations and translation
 
 <div align="center">
 
@@ -138,7 +138,7 @@ def prediction_step(cur_odom, prev_odom):
             for prev_theta in range(mapper.MAX_CELLS_A):
                 bel_prev = loc.bel[prev_x, prev_y, prev_theta]
 
-                # Skip tiny probabilities to save compute
+                # Skip smaller probabilities
                 if bel_prev < 0.0001:
                     continue
 
@@ -154,7 +154,6 @@ def prediction_step(cur_odom, prev_odom):
                             # Motion model: P(cur_pose | prev_pose, u)
                             prob = odom_motion_model(cur_pose, prev_pose, u)
 
-                            # Weighted sum of beliefs
                             loc.bel_bar[cur_x, cur_y, cur_theta] += prob * bel_prev
 
     # Normalize
@@ -163,7 +162,7 @@ def prediction_step(cur_odom, prev_odom):
 
 ### Sensor Model
 
-The robot's sensors are assumed to have Gaussian noise in their readings. The `sensor_model()` function, like the odometry motion model, calculates the likelihood of data—but based on sensor measurements instead of movement. It essentially takes a set of sensor observations at a given pose and returns the probability of receiving those observations.
+The robot's sensors are assumed to have Gaussian noise in their readings. The `sensor_model()` function, like the odometry motion model, calculates the likelihood of data but based on sensor measurements instead of movement. It essentially takes a set of sensor observations at a given pose and returns the probability of receiving those observations.
 
 ```python 
 def sensor_model(obs):
@@ -179,7 +178,7 @@ def sensor_model(obs):
 
 ### Update Step
 
-Finally, the `update_step()` function loops through the current state grid, calls the `sensor_model()` to obtain sensor likelihoods, and updates the belief accordingly. The updated belief is then normalized to ensure it sums to 1, providing the robot's estimated position within the discretized environment.
+Finally, the `update_step()` function loops through the current state grid, calls the `sensor_model()` to obtain sensor likelihoods, and updates the belief accordingly. The updated belief is then normalized to ensure it sums to 1.
 
 The below equation expresses how to calculate the total likelihood of a full set of sensor measurements *zₜ* given a robot’s pose *xₜ* and map *m*.
 
@@ -214,7 +213,7 @@ def update_step():
 
 The video below shows the shows a trajectory and localization simulation using the Bayes filter. The trajectory is pre-planned to move around the box. Here, the odometry model is plotted in red while the ground truth tracked by the simulator is plotted in green. From the video you can see the inaccuracy of the odometry model when operating in isolation. 
 
-The probabilistic belief is plotted in blue which you can see is a very good approximations of the robot's true position. The probability distribution is also shown using the white boxes where a stronger white represents a stronger probability. Note that we ignored all cells with probability <0.0001. 
+The probabilistic belief is plotted in blue which you can see is a very good approximation of the robot's true position. The probability distribution is also shown using the white boxes where stronger shades of white represent stronger probabilities. Note that we ignored all cells with probability <0.0001. 
 
 <iframe width="450" height="315" src="https://www.youtube.com/embed/XKlgeoXnjIc"allowfullscreen></iframe>
 <figcaption>Bayes Simulation</figcaption>
