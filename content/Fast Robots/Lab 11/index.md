@@ -55,7 +55,7 @@ The `SPIN` case is responsible for conducting the data collection and is discuss
 
 ### Arduino Code
 
-A good deal of code and groundwork was reused from my lab 9 in order to have the robot spin on axis and collect DMP and ToF data. The main difference is that for localization, I wanted to ensure that each measurment was accurate as possible and that only a set number of ToF measurments were being taken. To achieve this, the ToF measruments were taken only when the robot arrived at each angle. After arriving at each angle, the robot waits for 500 ms to ensure a steady measurment, then the new target angle is set and the robot moves again. 
+A good deal of code and groundwork was reused from my lab 9 in order to have the robot spin on axis and collect DMP and ToF data. Angular PID was used via the DMP to reliably arrive at each target angle. The main difference is that for localization, I wanted to ensure that each measurment was as accurate as possible and that only a set number of ToF measurments were being taken. To achieve this, the ToF measruments were taken only when the robot arrived at each angle. After arriving at each angle, the robot waits for 500 ms to ensure a steady measurment, then the new target angle is set and the robot moves again. 
 
 At first, I tried to take a total of 18 measurments (20° between each). However, this did not provde to be enough measurments for a reliable estimate of pose, thus I doubled it to 36 measurments (with 10° between each). Note that I had to update the `observations_count: 36` line in the `world.yaml` file.
 
@@ -118,6 +118,11 @@ For lab 12 I to continue troubleshooting the ToFs. One idea is to fuse measurmen
 
 <img src="/Fast Robots Media/Lab 11/Loc_5,3.png" alt="Alt text" style="display:block;">
 <figcaption>Localization @ (5,3)</figcaption>
+
+The following video shows the update step being completed at (5,-3)
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/QVTVIbofqAE"allowfullscreen></iframe>
+<figcaption>Localization @ (5,-3) Vid</figcaption>
 
 ### Discussion 
 A good deal of debugging and trouble shooting was required to make the localization work. The change of 18 ToF to 36 ToF measurments was already discussed above. I also had to angle my ToF sensor up more to reduce ground interference. Furthermore, I played around with the sensor noise found in `world.yaml` and ended up reducing it from `sensor_sigma: 0.1` to `sensor_sigma: 0.05`.
