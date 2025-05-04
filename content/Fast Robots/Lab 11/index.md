@@ -21,7 +21,9 @@ I started by verifying that the `lab11_sim.ipynb` file successfully produces the
 
 ### Python Code
 
-Until next lab we do not have a way of determening ground truth for the robot; for this lab only the update step of the Bayes filter is implemented via the `perform_observation_loop()` function shown below. Its purpose is to perform the observation loop behavior on the real robot and return two column numpy arrays: (1) ToF range values (meters) and (2) sensor_bearings in degrees.
+Until next lab we do not have a way of determening ground truth for the robot; for this lab only the update step of the Bayes filter is implemented via the `perform_observation_loop()` function shown below. Its purpose is to perform the observation loop behavior on the real robot and return two column numpy arrays: (1) ToF range values (meters) and (2) sensor bearings in degrees.
+
+In the function you can see that the `SPIN` case is called over BLE. It is responsible for conducting data collection and is further discussed in the Arudino Code section below. After the data is sent over BLE post collection, it is piped into a CSV file via the notification handler and passed into the localization algorithm by parsing through the CSV.
 
 ```python
 async def perform_observation_loop(self, rot_vel=120):
@@ -50,8 +52,6 @@ async def perform_observation_loop(self, rot_vel=120):
     
     raise NotImplementedError("perform_observation_loop is not implemented")
 ```
-
-The `SPIN` case is responsible for conducting the data collection and is discussed in the Arudino Code section below. 
 
 ### Arduino Code
 
