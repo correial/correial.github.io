@@ -25,16 +25,11 @@ Below is the core logic and control flow for our entire lab. It is responsible f
 
 
 ```python
-import math
-import time
-import pandas as pd
-
 async def recieveData(localizing, current_waypoint):
 # return current location, current orientation
     current_loc = [0, 0]
     print("localizing: ",localizing)
     if localizing:
-        #INPUT LOCALIZING CODE
         await loc.get_observation_data()
         
         # Run Update Step
@@ -44,9 +39,6 @@ async def recieveData(localizing, current_waypoint):
         current_loc[0] = 3.281*belief[0] # x
         current_loc[1] = 3.281*belief[1] # y
 
-    
-        #save current_loc to return at end of function
-       
     else:
         #assume we are at the waypoint
         current_loc = [current_waypoint[0], current_waypoint[1]] #set current location to x,y of the current waypoint
@@ -54,22 +46,15 @@ async def recieveData(localizing, current_waypoint):
        
     return current_loc
 
-
 def calculateTargetAngle(x, y, next_waypoint):
     # based on current location, calculate and return required angle
     x2 = next_waypoint[0]
     y2 = next_waypoint[1]
     
-    # print("x",x)
-    # print("y",y)
-    # print("x2:",x2)
-    # print("y2:",y2)
-    
     angle_rad = math.atan2(y2 - y, x2 - x)
     target_angle_deg = math.degrees(angle_rad)
    
     return target_angle_deg
-
 
 def calculateTargetDistance(x, y, current_tof, next_waypoint):
     #Implement logic
@@ -88,7 +73,6 @@ cmdr.reset_plotter()
 
 # Init Uniform Belief
 loc.init_grid_beliefs()
-
 
 waypoint_list = [(-4, -3), (-2, -1), (1, -1), (2, -3), (5, -3), (5, -2), (5, 3), (0, 3),(0, 0)]
 localize_flags = [False, True, False, False, False, True, True, True, True]  # encode whether to localize at a waypoint
