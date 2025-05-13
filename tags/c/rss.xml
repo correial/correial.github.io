@@ -248,7 +248,7 @@ Requests the current pose from the robot (&lt;code&gt;CMD.SEND_CURRENT_POSE&lt;&
 &lt;h4 id=&quot;cmd-spin&quot;&gt;CMD.SPIN&lt;&#x2F;h4&gt;
 &lt;p&gt;This command is called in the &lt;code&gt;perform_observation_loop()&lt;&#x2F;code&gt; function and is responsible for localization gyro and ToF data collection; it is explained in lab 11. The only change is the swapping out of an arrived flag for a timer just as for orientation and linear PID cases.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;results&quot;&gt;Results&lt;&#x2F;h2&gt;
-&lt;p&gt;Below are a series of trials from our lab! In the last two runs you can see a live belief map and logging in jupyter notebook which ouputs critical information such as if we are localizing at that specific waypoint, our current belief pose, our calculated target heading, etc.&lt;&#x2F;p&gt;
+&lt;p&gt;Below are a series of trials from our lab! In the last two runs you can see a live belief map and logging in jupyter notebook which ouputs critical information such as if we are localizing at that specific waypoint, our current belief pose, our calculated target heading, etc. To try and speed up our runs, we did not localize at every point since our waypoint setting algorithm and PID control was fairly good at getting us between shorter distances.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;early-run&quot;&gt;Early Run&lt;&#x2F;h3&gt;
 &lt;iframe width=&quot;450&quot; height=&quot;315&quot; src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;_luMDGDUHVw&quot;allowfullscreen&gt;&lt;&#x2F;iframe&gt;
 &lt;figcaption&gt;Early Run&lt;&#x2F;figcaption&gt;
