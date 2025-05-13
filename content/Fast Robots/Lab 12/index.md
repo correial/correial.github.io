@@ -260,7 +260,7 @@ This command is called in the `perform_observation_loop()` function and is respo
 
 ## Results
 
-Below are a series of trials from our lab! In the last two runs you can see a live belief map and logging in jupyter notebook which ouputs critical information such as if we are localizing at that specific waypoint, our current belief pose, our calculated target heading, etc. 
+Below are a series of trials from our lab! In the last two runs you can see a live belief map and logging in jupyter notebook which ouputs critical information such as if we are localizing at that specific waypoint, our current belief pose, our calculated target heading, etc. To try and speed up our runs, we did not localize at every point since our waypoint setting algorithm and PID control was fairly good at getting us between shorter distances.
 
 ### Early Run
 
