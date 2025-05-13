@@ -1,7 +1,9 @@
 +++
-title = "Left Empty for now"
+title = "Resume and More"
 [extra] 
 +++
+
+## Resume
 <!-- <div class="colored buttons centered">
  <a href="files/resume.pdf" download> Download Resume</a>
 </div>
