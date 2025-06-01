@@ -28,8 +28,6 @@ title = "About Me"
 
 <div style="clear: both;"></div> <!-- This ensures content below the images is cleared of float or flex constraints. -->
 
-<p>Junior at Cornell University studying Mechanical Engineering with a focus in Robotics</p>
+<p>Junior at Cornell University pursuing a B.S. in Mechanical Engineering with a focus in Robotics.</p>
 
-<p>Here on campus I am on the Cornell Nexus Project Team as well as the Cornell United Soccer Club Team. I will be updating my site through the semester to reflect my progress in <a href="/Fast%20Robots/">Fast Robots - MAE4190/ECE4160</a>.</p>
-
-
+<p>On campus, I serve as the Mechanical Subteam Lead for the <a href="/Nexus/">Cornell Nexus Project Team</a> and also play for the Cornell United Soccer Club Team. In Spring 2025, I completed <a href="/Fast%20Robots/">Fast Robots</a>, an applied course in robotics and control systems.

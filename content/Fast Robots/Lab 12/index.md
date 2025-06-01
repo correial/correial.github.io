@@ -114,9 +114,6 @@ while True:
 
         with open("MappingData.csv", "w") as f:
             f.truncate()
-
-
-        print("------------------------------------------------------------")
 ```
 
 ### Core Logic and Control Flow 
