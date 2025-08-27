@@ -4,73 +4,67 @@
         <loc>https://correial.github.io/</loc>
     </url>
     <url>
-        <loc>https://correial.github.io/Fast Robots/</loc>
+        <loc>https://correial.github.io/Portfolio/</loc>
     </url>
     <url>
-        <loc>https://correial.github.io/Fast Robots/lab-1/</loc>
-        <lastmod>2025-01-26</lastmod>
+        <loc>https://correial.github.io/Portfolio/cornell-nexus/</loc>
     </url>
     <url>
-        <loc>https://correial.github.io/Fast Robots/lab-10/</loc>
-        <lastmod>2025-04-08</lastmod>
+        <loc>https://correial.github.io/Portfolio/custom-automated-tensile-tester/</loc>
     </url>
     <url>
-        <loc>https://correial.github.io/Fast Robots/lab-11/</loc>
-        <lastmod>2025-05-03</lastmod>
+        <loc>https://correial.github.io/Portfolio/fast-robots/</loc>
     </url>
     <url>
-        <loc>https://correial.github.io/Fast Robots/lab-12/</loc>
-        <lastmod>2025-05-12</lastmod>
+        <loc>https://correial.github.io/Portfolio/foundation-robotics/</loc>
     </url>
     <url>
-        <loc>https://correial.github.io/Fast Robots/lab-2/</loc>
-        <lastmod>2025-02-20</lastmod>
+        <loc>https://correial.github.io/Portfolio/frc-robotics/</loc>
     </url>
     <url>
-        <loc>https://correial.github.io/Fast Robots/lab-3/</loc>
-        <lastmod>2025-02-20</lastmod>
-    </url>
-    <url>
-        <loc>https://correial.github.io/Fast Robots/lab-4/</loc>
-        <lastmod>2025-03-04</lastmod>
-    </url>
-    <url>
-        <loc>https://correial.github.io/Fast Robots/lab-5/</loc>
-        <lastmod>2025-03-08</lastmod>
-    </url>
-    <url>
-        <loc>https://correial.github.io/Fast Robots/lab-6/</loc>
-        <lastmod>2025-03-19</lastmod>
-    </url>
-    <url>
-        <loc>https://correial.github.io/Fast Robots/lab-7/</loc>
-        <lastmod>2025-03-24</lastmod>
-    </url>
-    <url>
-        <loc>https://correial.github.io/Fast Robots/lab-8/</loc>
-        <lastmod>2025-04-08</lastmod>
-    </url>
-    <url>
-        <loc>https://correial.github.io/Fast Robots/lab-9/</loc>
-        <lastmod>2025-04-08</lastmod>
-    </url>
-    <url>
-        <loc>https://correial.github.io/Nexus/</loc>
-    </url>
-    <url>
-        <loc>https://correial.github.io/docs/</loc>
+        <loc>https://correial.github.io/resume/</loc>
     </url>
     <url>
         <loc>https://correial.github.io/tags/</loc>
     </url>
     <url>
+        <loc>https://correial.github.io/tags/actuators/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/ansys-mechanical/</loc>
+    </url>
+    <url>
         <loc>https://correial.github.io/tags/c/</loc>
     </url>
     <url>
-        <loc>https://correial.github.io/tags/embedded-software/</loc>
+        <loc>https://correial.github.io/tags/cnc-mill/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/electrical-integration/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/fusion-360/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/leadership/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/localization/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/manufacturing/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/mechanical-design/</loc>
     </url>
     <url>
         <loc>https://correial.github.io/tags/microcontroller/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/path-planning/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/pid-control/</loc>
     </url>
     <url>
         <loc>https://correial.github.io/tags/python/</loc>
@@ -80,5 +74,11 @@
     </url>
     <url>
         <loc>https://correial.github.io/tags/sensors/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/solidworks/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/systems-engineering/</loc>
     </url>
 </urlset>
