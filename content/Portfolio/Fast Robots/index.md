@@ -108,6 +108,9 @@ Below are highlights from each lab building up to the final lab where I achieved
 - Verified with PD + extrapolation (Kp = 0.2, Kd = 3): robot could start 2.7 m from wall and still stop at 1 ft target without overshoot.
 - Demonstrated near-zero steady-state error at higher speeds, eliminating need for integral term.
 
+<img src="/Fast Robots Media/Lab 5/Kp.05Kd6.png" alt="Alt text" style="display:block;">
+<figcaption>PD Control</figcaption>
+
 <iframe width="450" height="315" src="https://www.youtube.com/embed/0FQvu8WyHYI"allowfullscreen></iframe>
 <figcaption>Proportional Control #1</figcaption>
 
@@ -197,10 +200,6 @@ Below are highlights from each lab building up to the final lab where I achieved
 
 #### Key Takeaways: 
 
-## Lab 8: Stunts
-
-**Key Takeaways:**
-
 - Designed flip stunt triggered via Bluetooth (CMD.STUNT), parameterized by wall distance for flexible tuning  
 - Used ToF + Kalman fusion to track distance in real time during stunt execution  
 - Tuned state-space A/B matrices to improve distance predictions; still noted velocity underestimation in KF  
@@ -213,9 +212,78 @@ Below are highlights from each lab building up to the final lab where I achieved
 
 ### Lab 9: Mapping
 
+#### Key Takeaways: 
+
+- Implemented on-axis spin using IMU DMP yaw control with PID, turning in 12° steps for 30 total increments  
+- Collected about 2780 ToF samples per rotation; achieved ~1.5 in average positional error due to wheel drift/slip  
+- Verified minimal overshoot at slow spin speeds; tradeoff between accuracy and memory usage  
+- Converted raw ToF readings into global coordinates using homogeneous transformation matrices  
+- Built full-room ToF map; noise caused arcs and spurious lines, but overall map aligned closely with ground truth  
+- Estimated walls from ToF scans and overlaid them with the known map for validation  
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/HBY2xBkobXg"allowfullscreen></iframe>
+<figcaption>360° Data Collection Scan</figcaption>
+
+<img src="/Fast Robots Media/Lab 9/MapPoints.png" alt="Alt text" style="display:block;">
+<figcaption>Mapping Scans</figcaption>
+
+
+<!-- Image row -->
+<div style="display: flex; justify-content: center; gap: 20px; align-items: flex-start; margin-top: 0; padding-top: 0;">
+
+  <figure style="text-align: center; margin: 0;">
+    <img src="/Fast Robots Media/Lab 9/MapwLines.png" alt="ToF Arena Map 1" style="height: 300px; width: auto;">
+    <figcaption style="margin-top: 5px;">ToF Arena Map with Estimated Lines and True Map</figcaption>
+  </figure>
+
+  <figure style="text-align: center; margin: 0;">
+    <img src="/Fast Robots Media/Lab 9/MapIRL.jpeg" alt="ToF Arena Map 2" style="height: 300px; width: auto;">
+    <figcaption style="margin-top: 5px;">ToF Arena Map with Estimated Lines and True Map</figcaption>
+  </figure>
+
+</div>
+
 ### Lab 10: Grid Localization using Bayes Filter
+
+#### Key Takeaways: 
+
+- Implemented Bayes Filter in Python to probabilistically track robot state (x, y, θ) in a discretized 3D grid  
+- Built odometry motion model: initial rotation, translation, final rotation; incorporated Gaussian noise  
+- Developed prediction step to propagate belief via motion model; optimized by skipping negligible states  
+- Created sensor model using ToF likelihoods; updated belief grid via Bayesian inference  
+- Simulation showed odometry drifted, but Bayes Filter belief (blue) aligned closely with ground truth (green)  
+- Performed best near walls since shorter ToF distances produced more accurate sensor updates  
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/XKlgeoXnjIc"allowfullscreen></iframe>
+<figcaption>Bayes Simulation</figcaption>
 
 ### Lab 11: Localization on the Real Robot
 
+#### Key Takeaways: 
+ 
+- Implemented update step on robot: performed spins, collected 36 ToF readings at 10° intervals, and sent data over BLE  
+- Ensured accuracy by pausing 500 ms at each angle before capturing ToF  
+- Results: localized robot within ~8 in of true pose; ToF underestimation shifted beliefs closer to walls  
+- Adjusted ToF mounting angle and reduced sensor noise parameter (sigma = 0.05) for improved reliability  
+- Demonstrated successful belief updates at multiple coordinates; belief (blue) tracked near ground truth (green)  
+
+<img src="/Fast Robots Media/Lab 11/Sim.png" alt="Alt text" style="display:block;">
+<figcaption>Localization Simulation - Belief (blue), Ground Truth (green)</figcaption>
+
 ### Lab 12: Path Planning and Final Project
 
+#### Key Takeaways: 
+
+- Combined all subsystems: waypoint navigation, PID orientation/linear control, Kalman ToF filtering, and Bayes localization  
+- Defined waypoint list with localization flags for selective belief updates along path  
+- Orientation PID: computed heading with atan2, rotated using DMP-based control with cutoff timer  
+- Linear PID: calculated target distance via ToF and belief position; advanced to waypoint  
+- Ran localization scans at chosen waypoints using SPIN case (Lab 11 method)  
+- Early runs showed overshoot and derivative blow-up; final run achieved smooth autonomous navigation through all waypoints  
+- Demonstrated complete system integration: perception, control, and planning working reliably in the real arena  
+
+<img src="/Fast Robots Media/Lab 12/Plan.png" alt="Alt text" Height = 400 style="display:block;">
+<figcaption>Navigation Plan</figcaption>
+
+<iframe width="450" height="315" src="https://www.youtube.com/embed/LJK30JyzM_U"allowfullscreen></iframe>
+<figcaption>Final Run</figcaption>
