@@ -4,7 +4,7 @@ weight = 1
 description = "Summer 2025 internship at humanoid startup working on CNC fixuring designs, assembling entire Phantom 1 humanoids, and developing comprehensive build instructions/workflow"
 
 [taxonomies]
-tags = ["Robotics", "Actuators", "Manufacturing", "Solidworks", "Leadership", "CNC Mill", "Systems Engineering", "Sensors"]
+tags = ["Robotics", "Mechanical Design", "Actuators", "Manufacturing", "Solidworks", "Leadership", "CNC Mill", "Systems Engineering", "Sensors"]
 
 [extra]
 logo = "/FoundationLogo.png"
