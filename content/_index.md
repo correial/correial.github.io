@@ -52,13 +52,21 @@ title = "About Me"
      style="flex:1; max-width:600px; width:100%; height:auto; border-radius:12px;">
 
 <div class="right-col" style="flex:1; display:flex; flex-direction:column; gap:20px; max-width:300px;">
-<p>On campus, I serve as the Mechanical Subteam Lead for the Cornell Nexus Project Team and also play for the Cornell United Soccer Club Team. Most recently, I interned as a mechanical engineer at Foundation, a Humanoid Robotics Company as well as completed Fast Robots, an applied course in robotics and control systems.</p>
+<p>
+  On campus, I work in the 
+  <a href="https://helbling-lab.github.io/" target="_blank">Helbling Lab</a> 
+  designing autonomous insect-scale robotic platforms as well as play for the Cornell United Soccer Club Team. 
+  Last year I served as the Mechanical Subteam Lead for the Cornell Nexus Project Team. 
+  Most recently, I interned as a mechanical engineer at Foundation, a Humanoid Robotics Company as well as completed Fast Robots, 
+  an applied course in robotics and control systems.
+</p>
+
 
 <img src="/ProfilePicture.jpg#no-hover#start" alt="Profile Picture"
-     style="width:100%; height:auto; border-radius:12px;">
+     style="width:80%; height:auto; border-radius:10px;">
 
 <img src="/TeamPic.png#no-hover#start" alt="Team Picture"
-     style="width:100%; height:auto; border-radius:12px;">
+     style="width:100%; height:auto; border-radius:10px;">
 </div>
 
 </div>

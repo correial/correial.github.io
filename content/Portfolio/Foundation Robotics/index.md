@@ -10,7 +10,7 @@ tags = ["Robotics", "Mechanical Design", "Actuators", "Manufacturing", "Solidwor
 logo = "/FoundationLogo.png"
 +++
 
-This past summer (2025) I had the incredible opportunity of interning at Foundation, a startup humanoid robotics company based out of San Fransisco, CA. During my time there I worked as an extremely hands on mechanica/robotics engineer where I designed manufacturing fixtures and was partially responsible for the assembly, workflow, debugging, and build instructions of entire Phantom 1 Humanoids. Below are a few internship highlights:
+This past summer (2025) I had the incredible opportunity of interning at Foundation, a startup humanoid robotics company based out of San Fransisco, CA. During my time there I worked as an extremely hands on mechanical/robotics engineer where I designed manufacturing fixtures and was partially responsible for the assembly, workflow, debugging, and build instructions of entire Phantom 1 Humanoids. Below are a few internship highlights:
 
 ## Humanoid Assembly & Debugging
 - Independently completed the assembly of entire Phantom MK1 Humanoids including structures, linkages, motor encoder soldering, power and signal harnesses fabrication, actuator calibration
