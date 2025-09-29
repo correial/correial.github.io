@@ -1,5 +1,5 @@
 +++
-title = "Mechanical Engineering Intern @ Foundation"
+title = "Mechanical Robotics Engineering Intern @ Foundation"
 weight = 1
 description = "Summer 2025 internship at humanoid startup working on CNC fixuring designs, assembling entire Phantom 1 humanoids, and developing comprehensive build instructions/workflow"
 
