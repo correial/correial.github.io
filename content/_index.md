@@ -57,7 +57,7 @@ title = "About Me"
   <a href="https://helbling-lab.github.io/" target="_blank">Helbling Lab</a> 
   designing autonomous insect-scale robotic platforms as well as play for the Cornell United Soccer Club Team. 
   Last year I served as the Mechanical Subteam Lead for the Cornell Nexus Project Team. 
-  Most recently, I interned as a mechanical engineer at Foundation, a Humanoid Robotics Company as well as completed Fast Robots, 
+  Most recently, I interned as a Mechanical Engineer at Foundation, a Humanoid Robotics Company as well as completed Fast Robots, 
   an applied course in robotics and control systems.
 </p>
 
