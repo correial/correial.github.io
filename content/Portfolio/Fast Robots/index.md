@@ -1,7 +1,7 @@
 +++
 title = "MAE 4190 Fast Robots"
 weight = 2
-description = "Cornell Engineering course where I designed and fabricated a fast autonomous car with dynamic system modeling and reactive control via integrating gyroscope and time-of-flight sensor feedback on an embedded processor."
+description = "Cornell Engineering course where I designed and programmed a high-speed autonomous car that navigated and reacted in real time, applying robotics and control principles to achieve fully self-driven performance"
 
 [taxonomies]
 tags = ["Robotics", "C++", "Electrical Integration", "Sensors", "Python", "PID Control", "Microcontroller", "Localization", "Path Planning"]

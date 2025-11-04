@@ -1,7 +1,7 @@
 +++
 title = "Automated Tensile/Compression Tester"
 weight = 5
-description = "High School Sr. Thesis - Automated Tensile/Compression Tester as part of joint internship with Drake Labs & Orbital Composites"
+description = "High school senior research thesis and internship project with Drake Labs and Orbital Composites where I designed and built a custom automated tester to measure deformation in 3D-printed carbon fiber composites, later presenting the work at the annual Science Research Fair."
 logo = "/nexus.png"
 
 [taxonomies]

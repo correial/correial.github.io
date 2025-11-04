@@ -19,6 +19,7 @@ taxonomies = [{ name = "tags", feed = true }]
 highlight_code = true
 math = true
 render_html = true
+render_unsafe = true
 highlight_theme = "css"
 highlight_themes_css = [
 	{ theme = "solarized-dark", filename = "syntax-theme-dark.css" },

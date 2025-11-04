@@ -1,7 +1,7 @@
 +++
 title = "Cornell Nexus"
 weight = 3
-description = "Cornell Engineering Project team currently working on a fully autonamous beach rover to address environmental concerns associated with microplastic pollution"
+description = "Cornell Engineering project team where I led the mechanical design and system integration of an autonomous beach-cleaning rover to address microplastic pollution, coordinating across mechanical, electrical, and software subsystems to solve a real-world robotics problem"
 
 [taxonomies]
 tags = ["Robotics", "Mechanical Design", "Solidworks", "Ansys Mechanical", "CNC Mill", "Systems Engineering", "PID Control", "Sensors", "Leadership", "Electrical Integration"]

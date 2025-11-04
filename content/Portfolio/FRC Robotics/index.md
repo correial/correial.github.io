@@ -1,7 +1,7 @@
 +++
 title = "Horace Mann FRC High School Robotics Team"
 weight = 4
-description = "Leading FIRST Robotics Competition High School Robotics Team - 2022 season, *Rapid React*, sponsored by The Boeing Company."
+description = "Led my high school’s FIRST Robotics Competition team through its first-ever regional championship and world championship qualification, guiding design, fabrication, and integration of a competitive robot for the Boeing-sponsored Rapid React season."
 logo = "/nexus.png"
 
 [taxonomies]

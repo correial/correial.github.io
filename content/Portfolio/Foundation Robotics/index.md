@@ -1,7 +1,7 @@
 +++
-title = "Mechanical Robotics Engineering Intern @ Foundation"
+title = "Foundation Robotics"
 weight = 1
-description = "Summer 2025 internship at humanoid startup working on CNC fixuring designs, assembling entire Phantom 1 humanoids, and developing comprehensive build instructions/workflow"
+description = "Summer 2025 internship at a San Francisco humanoid robotics startup where I accelerated development of next-generation robots by improving build workflows, designing precision fixtures, and assembling full-scale systems"
 
 [taxonomies]
 tags = ["Robotics", "Mechanical Design", "Actuators", "Manufacturing", "Solidworks", "Leadership", "CNC Mill", "Systems Engineering", "Sensors"]
