@@ -2,24 +2,33 @@ name: github pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+
+# allow the workflow token to push to gh-pages
+permissions:
+  contents: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
+          fetch-depth: 0
 
-      - name: Install and Run Zola
-        run: |
-          sudo snap install --edge zola
-          zola build
+      - name: Install Zola (pinned)
+        uses: taiki-e/install-action@v2
+        with:
+          tool: zola@0.19.2
 
-      - name: Deploy
+      - name: Build
+        run: zola build --force
+
+      - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.TOKEN }}
-          publish_dir: ./public
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # ← use the built-in token
+          publish_dir: public
+          publish_branch: gh-pages
