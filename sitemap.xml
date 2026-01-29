@@ -10,9 +10,6 @@
         <loc>https://correial.github.io/Portfolio/cornell-nexus/</loc>
     </url>
     <url>
-        <loc>https://correial.github.io/Portfolio/custom-automated-tensile-tester/</loc>
-    </url>
-    <url>
         <loc>https://correial.github.io/Portfolio/fast-robots/</loc>
     </url>
     <url>
@@ -20,6 +17,9 @@
     </url>
     <url>
         <loc>https://correial.github.io/Portfolio/frc-robotics/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/Portfolio/helbling-lab/</loc>
     </url>
     <url>
         <loc>https://correial.github.io/resume/</loc>
@@ -37,13 +37,25 @@
         <loc>https://correial.github.io/tags/c/</loc>
     </url>
     <url>
+        <loc>https://correial.github.io/tags/carbon-fiber/</loc>
+    </url>
+    <url>
         <loc>https://correial.github.io/tags/cnc-mill/</loc>
     </url>
     <url>
         <loc>https://correial.github.io/tags/electrical-integration/</loc>
     </url>
     <url>
+        <loc>https://correial.github.io/tags/experimental-methods/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/fluid-mechanics/</loc>
+    </url>
+    <url>
         <loc>https://correial.github.io/tags/fusion-360/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/interfacial-flight/</loc>
     </url>
     <url>
         <loc>https://correial.github.io/tags/leadership/</loc>
@@ -53,6 +65,9 @@
     </url>
     <url>
         <loc>https://correial.github.io/tags/manufacturing/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/matlab/</loc>
     </url>
     <url>
         <loc>https://correial.github.io/tags/mechanical-design/</loc>
@@ -67,6 +82,9 @@
         <loc>https://correial.github.io/tags/pid-control/</loc>
     </url>
     <url>
+        <loc>https://correial.github.io/tags/prototyping/</loc>
+    </url>
+    <url>
         <loc>https://correial.github.io/tags/python/</loc>
     </url>
     <url>
@@ -77,6 +95,9 @@
     </url>
     <url>
         <loc>https://correial.github.io/tags/solidworks/</loc>
+    </url>
+    <url>
+        <loc>https://correial.github.io/tags/system-dynamics/</loc>
     </url>
     <url>
         <loc>https://correial.github.io/tags/systems-engineering/</loc>
