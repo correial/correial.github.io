@@ -81,15 +81,15 @@ Assembly was performed under magnification due to the small scale of the compone
 
 <div style="display:flex; gap:16px; justify-content:center;">
   <div style="width:30%;">
-    <img src="/scrape.JPG" alt="Coating Removal" style="width:100%;">
+    <img src="/scrape.jpg" alt="Coating Removal" style="width:100%;">
     <figcaption>(a) Remove coating</figcaption>
   </div>
   <div style="width:30%;">
-    <img src="/glue.JPG" alt="Glue Application" style="width:100%;">
+    <img src="/glue.jpg" alt="Glue Application" style="width:100%;">
     <figcaption>(b) Apply glue</figcaption>
   </div>
   <div style="width:30%;">
-    <img src="/drop.JPG" alt="Bracket Placement" style="width:100%;">
+    <img src="/drop.jpg" alt="Bracket Placement" style="width:100%;">
     <figcaption>(c) Place pin-slot brackets</figcaption>
   </div>
 </div>
