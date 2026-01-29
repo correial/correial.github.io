@@ -29,7 +29,7 @@ Below is the final report for my senior design project. The remainder of this pa
 
 ## Summary
 
-<img src="/angle1.jpg" alt="Complete Experimental Prototype" style="display:block; margin:0 auto; width:90%;">
+<img src="/angle1.JPG" alt="Complete Experimental Prototype" style="display:block; margin:0 auto; width:90%;">
 <figcaption>Complete Experimental Prototype</figcaption>
 
 - **Motivation:** A key limitation of the existing Gammabot platform is braking, as the wings cannot provide reverse thrust and the robot relies almost entirely on passive drag, limiting stopping performance and precise station-keeping.
@@ -57,7 +57,7 @@ The braking mechanism was designed to mount directly to the existing Gammabot ch
 
 <div style="display:flex; gap:16px; justify-content:center;">
   <div style="width:28%;">
-    <img src="/FullCad.png" alt="Full CAD Assembly" style="width:100%;">
+    <img src="/FullCAD.png" alt="Full CAD Assembly" style="width:100%;">
     <figcaption>Full CAD assembly of the braking system</figcaption>
   </div>
   <div style="width:26%;">
