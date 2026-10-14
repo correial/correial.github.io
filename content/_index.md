@@ -65,7 +65,7 @@ img{ display:block; width:100%; height:auto; border-radius:12px; }
   </a>
 </h1>
 
-<div class="subtitle">Senior at Cornell University pursuing a B.S. in Mechanical Engineering and M.Eng in Systems Engineering</div>
+<div class="subtitle">Cornell Mechanical Engineering B.S. graduate pursuing an M.Eng. in Systems Engineering</div>
 
 <div class="row">
   <div class="col">
