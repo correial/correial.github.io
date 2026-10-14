@@ -75,7 +75,7 @@ img{ display:block; width:100%; height:auto; border-radius:12px; }
 
   <div class="col">
     <p>At Cornell, I work in the <a href="https://helbling-lab.github.io/" target="_blank">Helbling Robotics Research Lab</a>, where I contribute to the design of autonomous insect-scale robots capable of sustained operation in real-world environments. I also served as the Mechanical Subteam Lead for Nexus, a Cornell Project Team developing an autonomous beach-cleaning rover to remove microplastics from sand. These experiences have enhanced my ability to fuse mechanical design with system-level integration and management through close collaboration with multidisciplinary engineering teams.</p>
-    <p>This past summer, I interned at Foundation Robotics, a humanoid robotics company in San Francisco, where I contributed to the design, build, and scaling of next-generation humanoid systems. I also previously worked at The MITRE Corporation, where I modeled and analyzed defense aircraft components to enhance cooling performance and system reliability.</p>
+    <p>This past summer, I interned at Amazon Robotics in North Reading, MA, where I contributed to the design, build, and scaling of next-generation robotic systems. I also previously worked at humanoid startup <a href="https://foundation.bot/" target="_blank" rel="noopener">Foundation Robotics</a> in San Francisco and <a href="https://www.mitre.org/" target="_blank" rel="noopener">The MITRE Corporation</a> in Bedford, MA.</p>
     <p>Outside the lab, I am an active member of the Cornell United Soccer Club Team and a lifelong competitive USSA and FIS ski racer.</p>
     <div class="pair">
       <img src="/ProfilePicture.jpg#no-hover#start" alt="Profile Picture">
